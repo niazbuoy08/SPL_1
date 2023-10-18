@@ -1,5 +1,6 @@
 #include<iostream>
 #include<fstream>
+#include <sstream>
 #include<string.h>
 using namespace std;
 
@@ -9,6 +10,8 @@ void display();
 void AddNewFood();
 void YesOrNoCheck();
 void AdminPage();
+void EditFood();
+void DisplayAllItems();
 
 int main()
 {
@@ -76,22 +79,27 @@ int main()
             system("cls");
             loginAsAdmin();
             break;
+
         case 2:
             system("cls");
             loginAsSalesperson();
             break;
+
         case 3:
             system("cls");
             loginAsCustomer();
             break;
+
         case 4:
             system("cls");
             main();
             break;
+
         case 5:
             system("cls");
             cout << "Exiting the program\n" << endl;
             break;
+
         default:
             system("cls");
             cout << "Invalid option. Please select an option between 1 and 5" << endl;
@@ -121,18 +129,22 @@ int main()
             system("cls");
             registerAsAdmin();
             break;
+
         case 2:
             system("cls");
             registerAsCustomer();
             break;
+
         case 3:
             system("cls");
             main();
             break;
+
         case 4:
             system("cls");
             cout << "Exiting the program\n" << endl;
             break;
+
         default:
             system("cls");
             cout << "Invalid option. Please select an option between 1 and 4" << endl;
@@ -302,6 +314,9 @@ int main()
    void AdminPage()
    {
        display();
+       cout << "----------------------------- ADMIN -----------------------------\n" << endl;
+       cout << "=================================================================\n" << endl;
+
        int c;
 
        cout << "1.Add New Food\n" <<endl;
@@ -312,7 +327,7 @@ int main()
        cout << "6.Add Salesperson\n" <<endl;
        cout << "7.Go to Login Page\n" <<endl;
        cout << "8.Go to Welcome Page\n" <<endl;
-       cout << "Exit\n" <<endl;
+       cout << "9.Exit\n" <<endl;
 
        cout << "***************************************************************\n" <<endl;
        cout << "Please select your option(1-9)" <<endl;
@@ -324,10 +339,27 @@ int main()
               system("cls");
               AddNewFood();
               break;
+
         case 2:
+              system("cls");
+              EditFood();
+              break;
+
+        case 5:
+              system("cls");
+              DisplayAllItems();
+              break;
+
+        case 7:
+              system("cls");
+              login();
+              break;
+
+        case 8:
               system("cls");
               main();
               break;
+
         default:
                 system("cls");
                 cout<<"Wrong input"<<endl;
@@ -335,6 +367,10 @@ int main()
    }
    void AddNewFood()
    {
+   display();
+   cout << "----------------------------- ADMIN -----------------------------\n" << endl;
+   cout << "=================================================================\n" << endl;
+
    string pname;
    string cname;
 
@@ -363,9 +399,9 @@ int main()
 
    cout<<"Do you want to add another product?([Yes] or [No]):";
 
-
-
    YesOrNoCheck();
+
+
 }
 
    void YesOrNoCheck()
@@ -375,17 +411,60 @@ int main()
 
     if (op == "Yes" )
     {
-
+        system("cls");
         AddNewFood();
 
     }
     else if(op == "No" )
     {
-
+        system("cls");
         main();
     }
+   }
 
+   void DisplayAllItems() {
+
+    display();
+    cout << "----------------------------- ADMIN -----------------------------\n" << endl;
+    cout << "=================================================================\n" << endl;
+
+    ifstream file("products.txt");
+
+    if (!file) {
+        cout << "Error opening file." << endl;
+        return;
+    }
+
+    string line;
+    int prodNumber = 1;
+
+    cout << "PROD.NO\tProduct Name\tCompany\tUnit Price\tQuantity\tDiscount" << endl;
+
+    while (getline(file, line)) {
+        stringstream ss(line);
+        string pname, cname, uprice, quantity, discount;
+
+
+        ss >> pname >> cname >> uprice >> quantity >> discount;
+
+
+        cout << prodNumber << "\t" << pname << "\t" << cname << "\t" << uprice << "\t" << quantity << "\t" << discount << endl;
+        prodNumber++;
+    }
+
+    file.close();
 }
+
+
+   void EditFood()
+   {
+       display();
+       cout << "----------------------------- ADMIN -----------------------------\n" << endl;
+       cout << "=================================================================\n" << endl;
+
+   }
+
+
 
 
 
