@@ -6,6 +6,9 @@ using namespace std;
 void login();
 void registration();
 void display();
+void AddNewFood();
+void YesOrNoCheck();
+void AdminPage();
 
 int main()
 {
@@ -163,12 +166,14 @@ int main()
     file.close();
 
     cout << "Registration successful!" << endl;
+    void AdminPage();
+
 
    }
    void registerAsCustomer()
    {
     display();
-    cout << "--------------------------- REGISTER --------------------------\n" << endl;
+    cout << "--------------------------- REGISTER--------------------------\n" << endl;
     cout << "===============================================================\n" << endl;
 
     string username, password;
@@ -228,8 +233,10 @@ int main()
        if(count==1)
        {
            cout<<userID<<" your login is successful\n Thanks for logging in \n";
+           AdminPage();
 
-       }else
+       }
+       else
        {
            cout<<" LOGIN ERROR \n Please check username and password \n";
        }
@@ -276,6 +283,7 @@ int main()
        if(count==1)
        {
            cout<<userID<<" your login is successful\n Thanks for logging in \n";
+           AdminPage();
 
        }else
        {
@@ -291,5 +299,94 @@ int main()
        cout << "################################################################\n" <<endl;
        cout << "================================================================\n" <<endl;
    }
+   void AdminPage()
+   {
+       display();
+       int c;
+
+       cout << "1.Add New Food\n" <<endl;
+       cout << "2.Edit Food\n" <<endl;
+       cout << "3.Delete Food\n" <<endl;
+       cout << "4.Inventory\n" <<endl;
+       cout << "5.Show All food items\n" <<endl;
+       cout << "6.Add Salesperson\n" <<endl;
+       cout << "7.Go to Login Page\n" <<endl;
+       cout << "8.Go to Welcome Page\n" <<endl;
+       cout << "Exit\n" <<endl;
+
+       cout << "***************************************************************\n" <<endl;
+       cout << "Please select your option(1-9)" <<endl;
+       cin>>c;
+       cout<<endl;
+       switch(c)
+       {
+        case 1:
+              system("cls");
+              AddNewFood();
+              break;
+        case 2:
+              system("cls");
+              main();
+              break;
+        default:
+                system("cls");
+                cout<<"Wrong input"<<endl;
+              }
+   }
+   void AddNewFood()
+   {
+   string pname;
+   string cname;
+
+   double uprice;
+   int quantity;
+   int discount;
+   ifstream input ("products.txt");
+   //file.open("products.txt",ios::out|ios::app);
+   //ofstream();
+   cout<<"Enter Product Name for the next product:";
+   cin>>pname;
+   cout<<"Enter Company Name for the next product:";
+   cin>>cname;
+   cout<<"Enter Unit-Price for the next product:";
+   cin>>uprice;
+   cout<<"Enter Quantity for the next product:";
+   cin>>quantity;
+   cout<<"Enter discount for the next product:";
+   cin>>discount;
+
+   //file<<pname<<"		"<<cname<<"		  "<<uprice<<"		 "<<quantity<<"      "<<discount<<endl;
+
+
+   cout<<"Product has been successfully added"<<endl;
+
+   cout<<"===============================================\n"<<endl;
+   //file.open("products.txt");
+   cout<<"Do you want to add another product?([Yes] or [No]):";
+
+
+
+   YesOrNoCheck();
+}
+
+   void YesOrNoCheck()
+   {
+    string op;
+    cin>>op;
+
+    if (op == "Yes" )
+    {
+
+        AddNewFood();
+
+    }
+    else if(op == "No" )
+    {
+
+        main();
+    }
+
+}
+
 
 
