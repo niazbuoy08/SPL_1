@@ -1,0 +1,2 @@
+shingara		cds		  10		 50      0
+chips		pran		  20		 20      0

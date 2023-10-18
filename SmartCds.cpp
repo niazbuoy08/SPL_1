@@ -341,9 +341,8 @@ int main()
    double uprice;
    int quantity;
    int discount;
-   ifstream input ("products.txt");
-   //file.open("products.txt",ios::out|ios::app);
-   //ofstream();
+   ofstream file("products.txt",ios::app);
+
    cout<<"Enter Product Name for the next product:";
    cin>>pname;
    cout<<"Enter Company Name for the next product:";
@@ -355,13 +354,13 @@ int main()
    cout<<"Enter discount for the next product:";
    cin>>discount;
 
-   //file<<pname<<"		"<<cname<<"		  "<<uprice<<"		 "<<quantity<<"      "<<discount<<endl;
-
+   file<<pname<<"		"<<cname<<"		  "<<uprice<<"		 "<<quantity<<"      "<<discount<<endl;
+   file.close();
 
    cout<<"Product has been successfully added"<<endl;
 
    cout<<"===============================================\n"<<endl;
-   //file.open("products.txt");
+
    cout<<"Do you want to add another product?([Yes] or [No]):";
 
 
