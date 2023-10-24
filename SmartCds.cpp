@@ -458,9 +458,71 @@ int main()
 
    void EditFood()
    {
-       display();
-       cout << "----------------------------- ADMIN -----------------------------\n" << endl;
-       cout << "=================================================================\n" << endl;
+
+    display();
+    cout << "----------------------- MODIFY QUANTITY -----------------------\n" << endl;
+    cout << "===============================================================\n" << endl;
+
+    ifstream inputFile("products.txt");
+    ofstream tempFile("temp_products.txt");
+
+    if (!inputFile || !tempFile) {
+        cout << "Error opening file." << endl;
+        return;
+    }
+
+    int prodNumber = 1;
+    string line;
+    string itemToModify;
+    int newQuantity;
+
+    cout << "PROD.NO\tProduct Name\tCompany\tUnit Price\tQuantity\tDiscount" << endl;
+
+    while (getline(inputFile, line)) {
+        stringstream ss(line);
+        string pname, cname, uprice, quantity, discount;
+
+        ss >> pname >> cname >> uprice >> quantity >> discount;
+
+        cout << prodNumber << "\t" << pname << "\t" << cname << "\t" << uprice << "\t" << quantity << "\t" << discount << endl;
+        prodNumber++;
+    }
+
+    inputFile.close();
+
+    cout << "Enter the product number you want to modify: ";
+    cin >> itemToModify;
+    cout << "Enter the new quantity: ";
+    cin >> newQuantity;
+
+    inputFile.open("products.txt"); // Reopen the input file
+    prodNumber = 1;
+
+    while (getline(inputFile, line)) {
+        stringstream ss(line);
+        string pname, cname, uprice, quantity, discount;
+
+        ss >> pname >> cname >> uprice >> quantity >> discount;
+
+        if (prodNumber != stoi(itemToModify)) {
+            tempFile << pname << " " << cname << " " << uprice << " " << quantity << " " << discount << endl;
+        } else {
+            tempFile << pname << " " << cname << " " << uprice << " " << newQuantity << " " << discount << endl;
+        }
+
+        prodNumber++;
+    }
+
+    inputFile.close();
+    tempFile.close();
+
+    // Replace the original file with the modified data
+    remove("products.txt");
+    rename("temp_products.txt", "products.txt");
+
+    cout << "Quantity modified successfully." << endl;
+
+
 
    }
 
