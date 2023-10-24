@@ -12,6 +12,7 @@ void YesOrNoCheck();
 void AdminPage();
 void EditFood();
 void DisplayAllItems();
+void DeleteFood();
 
 int main()
 {
@@ -344,7 +345,10 @@ int main()
               system("cls");
               EditFood();
               break;
-
+        case 3:
+              system("cls");
+              DeleteFood();
+              break;
         case 5:
               system("cls");
               DisplayAllItems();
@@ -365,18 +369,19 @@ int main()
                 cout<<"Wrong input"<<endl;
               }
    }
-   void AddNewFood()
-   {
-   display();
-   cout << "----------------------------- ADMIN -----------------------------\n" << endl;
-   cout << "=================================================================\n" << endl;
-
    string pname;
    string cname;
 
    double uprice;
    int quantity;
    int discount;
+   void AddNewFood()
+   {
+   display();
+   cout << "----------------------------- ADMIN -----------------------------\n" << endl;
+   cout << "=================================================================\n" << endl;
+
+
    ofstream file("products.txt",ios::app);
 
    cout<<"Enter Product Name for the next product:";
@@ -495,7 +500,7 @@ int main()
     cout << "Enter the new quantity: ";
     cin >> newQuantity;
 
-    inputFile.open("products.txt"); // Reopen the input file
+    inputFile.open("products.txt");
     prodNumber = 1;
 
     while (getline(inputFile, line)) {
@@ -516,15 +521,76 @@ int main()
     inputFile.close();
     tempFile.close();
 
-    // Replace the original file with the modified data
+
     remove("products.txt");
     rename("temp_products.txt", "products.txt");
 
     cout << "Quantity modified successfully." << endl;
+}
+void DeleteFood()
+ {
+    string pname2;
+    display();
+    cout << "----------------------------- DELETE FOOD -----------------------------\n" << endl;
+    cout << "=================================================================\n" << endl;
+    ifstream inputFile("products.txt");
+    ofstream tempFile("tempo_products.txt");
+    if (!inputFile || !tempFile) {
+        cout << "Error opening file." << endl;
+        return;
+    }
+    int prodNumber = 1;
+    string line;
+    string itemTodelete;
 
+    cout << "PROD.NO\tProduct Name\tCompany\tUnit Price\tQuantity\tDiscount" << endl;
 
+    while (getline(inputFile, line)) {
+        stringstream ss(line);
+        string pname, cname, uprice, quantity, discount;
 
-   }
+        ss >> pname >> cname >> uprice >> quantity >> discount;
+
+        cout << prodNumber << "\t" << pname << "\t" << cname << "\t" << uprice << "\t" << quantity << "\t" << discount << endl;
+        prodNumber++;
+    }
+
+    inputFile.close();
+    cout<<"Enter the Product No to delete:";
+    cin>>itemTodelete;
+    inputFile.open("products.txt");
+    prodNumber = 1;
+
+    while (getline(inputFile, line)) {
+        stringstream ss(line);
+        string pname, cname, uprice, quantity, discount;
+
+        ss >> pname >> cname >> uprice >> quantity >> discount;
+
+        if (prodNumber != stoi(itemTodelete)) {
+            tempFile << pname << " " << cname << " " << uprice << " " << quantity << " " << discount << endl;
+        } else {
+            tempFile<<"Record deleted"<<endl;
+        }
+
+        prodNumber++;
+    }
+
+    inputFile.close();
+    tempFile.close();
+    if(remove("products.txt")!=0)
+    {
+        cout<<"\n\tFile does not exist";
+    }
+
+    if(rename("tempo_products.txt","products.txt")!=0)
+    {
+        cout<<"\n\tFile can not be renamed.";
+    }
+
+    cout << "\n\tProduct deleted successfully." << endl;
+}
+
 
 
 
