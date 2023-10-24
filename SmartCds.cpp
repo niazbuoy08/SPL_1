@@ -11,8 +11,9 @@ void AddNewFood();
 void YesOrNoCheck();
 void AdminPage();
 void EditFood();
-void DisplayAllItems();
+void Inventory();
 void DeleteFood();
+void AddSalesperson();
 
 int main()
 {
@@ -159,13 +160,22 @@ int main()
     cout << "--------------------------- REGISTER --------------------------\n" << endl;
     cout << "===============================================================\n" << endl;
 
-    string username, password;
+    string username, password, fname,lname, mobile ;
 
     cout << "Enter  username: ";
     cin >> username;
 
     cout << "Enter  password: ";
     cin >> password;
+
+    cout << "Enter  your First Name: ";
+    cin >> fname;
+
+    cout << "Enter  your Last Name: ";
+    cin >> lname;
+
+    cout << "Enter  Mobile Number: ";
+    cin >> mobile;
 
     ofstream file("admin_registration.txt", ios::app);
 
@@ -175,7 +185,7 @@ int main()
     }
 
 
-    file << username << " " << password << endl;
+    file << username << " " << password << " " << fname << " " << lname << " " << mobile <<  endl;
     file.close();
 
     cout << "Registration successful!" << endl;
@@ -189,13 +199,22 @@ int main()
     cout << "--------------------------- REGISTER--------------------------\n" << endl;
     cout << "===============================================================\n" << endl;
 
-    string username, password;
+    string username, password, fname,lname, mobile ;
 
     cout << "Enter a username: ";
     cin >> username;
 
     cout << "Enter a password: ";
     cin >> password;
+
+    cout << "Enter  your First Name: ";
+    cin >> fname;
+
+    cout << "Enter  your Last Name: ";
+    cin >> lname;
+
+    cout << "Enter  Mobile Number: ";
+    cin >> mobile;
 
     ofstream file("customer_registration.txt", ios::app);
 
@@ -204,12 +223,51 @@ int main()
         return;
     }
 
-    file << username << " " << password << endl;
+    file << username << " " << password << " " << fname << " " << lname << " " << mobile <<  endl;
     file.close();
 
     cout << "Registration successful!" << endl;
 
    }
+
+   void AddSalesperson()
+   {
+    display();
+    cout << "--------------------------- REGISTER--------------------------\n" << endl;
+    cout << "===============================================================\n" << endl;
+
+    string username, password, fname,lname, mobile ;
+
+    cout << "Enter a username: ";
+    cin >> username;
+
+    cout << "Enter a password: ";
+    cin >> password;
+
+    cout << "Enter  your First Name: ";
+    cin >> fname;
+
+    cout << "Enter  your Last Name: ";
+    cin >> lname;
+
+    cout << "Enter  Mobile Number: ";
+    cin >> mobile;
+
+    ofstream file("salesperson_registration.txt", ios::app);
+
+    if (!file) {
+        cerr << "Error opening the file!" << endl;
+        return;
+    }
+
+    file << username << " " << password << " " << fname << " " << lname << " " << mobile <<  endl;
+    file.close();
+
+    cout << "Registration successful!" << endl;
+
+   }
+
+
    void loginAsAdmin()
    {
        display();
@@ -259,6 +317,48 @@ int main()
    void loginAsSalesperson()
    {
 
+       display();
+       cout << "----------------------------- LOGIN -----------------------------\n" << endl;
+       cout << "=================================================================\n" << endl;
+
+       int count;
+
+       string userID, password, id, pass;
+
+       cout<<"\t\t\t Please enter your username and password"<<endl;
+
+       cout<<"USERNAME: ";
+
+       cin>>userID;
+
+       cout<<"PASSWORD: ";
+
+       cin>>password;
+
+       ifstream input("salesperson_registration.txt");
+
+       while(input>>id>>pass)
+       {
+           if(id==userID && pass==password)
+           {
+               count=1;
+               system("cls");
+           }
+       }
+
+       input.close();
+
+       if(count==1)
+       {
+           cout<<userID<<" your login is successful\n Thanks for logging in \n";
+
+       }
+       else
+       {
+           cout<<" LOGIN ERROR \n Please check username and password \n";
+       }
+
+
    }
    void loginAsCustomer()
    {
@@ -298,7 +398,8 @@ int main()
            cout<<userID<<" your login is successful\n Thanks for logging in \n";
            AdminPage();
 
-       }else
+       }
+       else
        {
            cout<<" LOGIN ERROR \n Please check username and password \n";
        }
@@ -311,7 +412,9 @@ int main()
        cout << "########################## SMARTCDS ############################\n" <<endl;
        cout << "################################################################\n" <<endl;
        cout << "================================================================\n" <<endl;
+
    }
+
    void AdminPage()
    {
        display();
@@ -334,6 +437,7 @@ int main()
        cout << "Please select your option(1-9)" <<endl;
        cin>>c;
        cout<<endl;
+
        switch(c)
        {
         case 1:
@@ -349,9 +453,14 @@ int main()
               system("cls");
               DeleteFood();
               break;
-        case 5:
+        case 4:
               system("cls");
-              DisplayAllItems();
+              Inventory();
+              break;
+
+        case 6:
+              system("cls");
+              AddSalesperson();
               break;
 
         case 7:
@@ -369,6 +478,7 @@ int main()
                 cout<<"Wrong input"<<endl;
               }
    }
+
    string pname;
    string cname;
 
@@ -377,6 +487,7 @@ int main()
    int discount;
    void AddNewFood()
    {
+
    display();
    cout << "----------------------------- ADMIN -----------------------------\n" << endl;
    cout << "=================================================================\n" << endl;
@@ -425,9 +536,10 @@ int main()
         system("cls");
         main();
     }
+
    }
 
-   void DisplayAllItems() {
+   void Inventory() {
 
     display();
     cout << "----------------------------- ADMIN -----------------------------\n" << endl;
@@ -530,15 +642,19 @@ int main()
 void DeleteFood()
  {
     string pname2;
+
     display();
     cout << "----------------------------- DELETE FOOD -----------------------------\n" << endl;
     cout << "=================================================================\n" << endl;
+
     ifstream inputFile("products.txt");
     ofstream tempFile("tempo_products.txt");
+
     if (!inputFile || !tempFile) {
         cout << "Error opening file." << endl;
         return;
     }
+
     int prodNumber = 1;
     string line;
     string itemTodelete;
@@ -556,6 +672,7 @@ void DeleteFood()
     }
 
     inputFile.close();
+
     cout<<"Enter the Product No to delete:";
     cin>>itemTodelete;
     inputFile.open("products.txt");
@@ -578,6 +695,7 @@ void DeleteFood()
 
     inputFile.close();
     tempFile.close();
+
     if(remove("products.txt")!=0)
     {
         cout<<"\n\tFile does not exist";
