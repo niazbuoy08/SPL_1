@@ -1,4 +1,4 @@
-Record deleted   
-chips pran 20 20 0
-Record deleted   
-icecream polar 50 30 0
+Shingara              Iutcds                10          20          0          
+chips                 pran                  20          20          0         
+Samosa                Iutcds                10          20          0
+icecream              polar                 50          30          0         

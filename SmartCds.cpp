@@ -3,6 +3,7 @@
 #include <sstream>
 #include<string.h>
 #include <conio.h>
+#include <iomanip>
 using namespace std;
 
 void login();
@@ -573,7 +574,9 @@ int main()
     string line;
     int prodNumber = 1;
 
-    cout << "PROD.NO\tProduct Name\tCompany\tUnit Price\tQuantity\tDiscount" << endl;
+    cout << setw(7) << "PROD.NO" << setw(24) << "Product Name" << setw(19) << "Company"
+         << setw(14) << "Unit Price" << setw(12) << "Quantity" << setw(12) << "Discount" << endl;
+
 
     while (getline(file, line)) {
         stringstream ss(line);
@@ -583,7 +586,8 @@ int main()
         ss >> pname >> cname >> uprice >> quantity >> discount;
 
 
-        cout << prodNumber << "\t" << pname << "\t" << cname << "\t" << uprice << "\t" << quantity << "\t" << discount << endl;
+        cout << setw(7) << prodNumber << "  " << setw(20) << pname << "  " << setw(20) << cname
+             << "  " << setw(10) << uprice << "  " << setw(10) << quantity << "  " << setw(10) << discount << endl;
         prodNumber++;
     }
 
@@ -611,7 +615,8 @@ int main()
     string itemToModify;
     int newQuantity;
 
-    cout << "PROD.NO\tProduct Name\tCompany\tUnit Price\tQuantity\tDiscount" << endl;
+    cout << setw(7) << "PROD.NO" << setw(24) << "Product Name" << setw(19) << "Company"
+         << setw(14) << "Unit Price" << setw(12) << "Quantity" << setw(12) << "Discount" << endl;
 
     while (getline(inputFile, line)) {
         stringstream ss(line);
@@ -619,7 +624,8 @@ int main()
 
         ss >> pname >> cname >> uprice >> quantity >> discount;
 
-        cout << prodNumber << "\t" << pname << "\t" << cname << "\t" << uprice << "\t" << quantity << "\t" << discount << endl;
+        cout << setw(7) << prodNumber << "  " << setw(20) << pname << "  " << setw(20) << cname
+             << "  " << setw(10) << uprice << "  " << setw(10) << quantity << "  " << setw(10) << discount << endl;
         prodNumber++;
     }
 
@@ -640,9 +646,13 @@ int main()
         ss >> pname >> cname >> uprice >> quantity >> discount;
 
         if (prodNumber != stoi(itemToModify)) {
-            tempFile << pname << " " << cname << " " << uprice << " " << quantity << " " << discount << endl;
+            tempFile << setw(20) << left << pname << "  " << setw(20) << left << cname << "  "
+                     << setw(10) << left << uprice << "  " << setw(10) << left << quantity << "  "
+                     << setw(10) << left << discount << endl;
         } else {
-            tempFile << pname << " " << cname << " " << uprice << " " << newQuantity << " " << discount << endl;
+            tempFile << setw(20) << left << pname << "  " << setw(20) << left << cname << "  "
+                     << setw(10) << left << uprice << "  " << setw(10) << left << newQuantity << "  "
+                     << setw(10) << left << discount << endl;
         }
 
         prodNumber++;
@@ -677,15 +687,16 @@ void DeleteFood()
     string line;
     string itemTodelete;
 
-    cout << "PROD.NO\tProduct Name\tCompany\tUnit Price\tQuantity\tDiscount" << endl;
-
+    cout << setw(7) << "PROD.NO" << setw(24) << "Product Name" << setw(19) << "Company"
+         << setw(14) << "Unit Price" << setw(12) << "Quantity" << setw(12) << "Discount" << endl;
     while (getline(inputFile, line)) {
         stringstream ss(line);
         string pname, cname, uprice, quantity, discount;
 
         ss >> pname >> cname >> uprice >> quantity >> discount;
 
-        cout << prodNumber << "\t" << pname << "\t" << cname << "\t" << uprice << "\t" << quantity << "\t" << discount << endl;
+        cout << setw(7) << prodNumber << "  " << setw(20) << pname << "  " << setw(20) << cname
+             << "  " << setw(10) << uprice << "  " << setw(10) << quantity << "  " << setw(10) << discount << endl;
         prodNumber++;
     }
 
@@ -703,9 +714,11 @@ void DeleteFood()
         ss >> pname >> cname >> uprice >> quantity >> discount;
 
         if (prodNumber != stoi(itemTodelete)) {
-            tempFile << pname << " " << cname << " " << uprice << " " << quantity << " " << discount << endl;
+            tempFile << setw(20) << left << pname << "  " << setw(20) << left << cname << "  "
+                     << setw(10) << left << uprice << "  " << setw(10) << left << quantity << "  "
+                     << setw(10) << left << discount << endl;
         } else {
-            tempFile<<"Record deleted"<<endl;
+            tempFile<<"           "<<endl;
         }
 
         prodNumber++;
