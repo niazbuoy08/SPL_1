@@ -2,6 +2,7 @@
 #include<fstream>
 #include <sstream>
 #include<string.h>
+#include <conio.h>
 using namespace std;
 
 void login();
@@ -14,6 +15,22 @@ void EditFood();
 void Inventory();
 void DeleteFood();
 void AddSalesperson();
+
+
+
+string getPassword() {
+    string password = "";
+    char ch;
+    while (true) {
+        ch = _getch(); // Get a character from the user without displaying it
+        if (ch == 13) // Enter key
+            break;
+        password.push_back(ch); // Append the character to the password string
+        cout << "*"; // Display an asterisk to hide the input
+    }
+    cout << endl; // Move to the next line
+    return password;
+}
 
 int main()
 {
@@ -156,11 +173,11 @@ int main()
 
    void registerAsAdmin()
    {
-    display();
+      display();
     cout << "--------------------------- REGISTER --------------------------\n" << endl;
     cout << "===============================================================\n" << endl;
 
-    string username, password, fname,lname, mobile ;
+    string username, password, fname, lname, mobile;
 
     cout << "Enter  username: ";
     cin >> username;
@@ -184,13 +201,10 @@ int main()
         return;
     }
 
-
     file << username << " " << password << " " << fname << " " << lname << " " << mobile <<  endl;
     file.close();
 
     cout << "Registration successful!" << endl;
-    void AdminPage();
-
 
    }
    void registerAsCustomer()
@@ -270,47 +284,51 @@ int main()
 
    void loginAsAdmin()
    {
-       display();
-       cout << "----------------------------- LOGIN -----------------------------\n" << endl;
-       cout << "=================================================================\n" << endl;
 
-       int count;
+    display();
+    cout << "----------------------------- LOGIN -----------------------------\n" << endl;
+    cout << "=================================================================\n" << endl;
 
-       string userID, password, id, pass;
+    int count = 0;
+    string userID, password, id, pass;
 
-       cout<<"\t\t\t Please enter your username and password "<<endl;
+    cout << "\t\t\t Please enter your username and password" << endl;
 
-       cout<<"USERNAME: ";
+    cout << "USERNAME: ";
+    cin >> userID;
 
-       cin>>userID;
+    cout << "PASSWORD: ";
+    password = getPassword(); // Call getPassword to hide the password input
 
-       cout<<"PASSWORD: ";
+    ifstream input("admin_registration.txt");
 
-       cin>>password;
+    if (!input) {
+        cerr << "Error opening the file!" << endl;
+        return;
+    }
 
-       ifstream input("admin_registration.txt");
+      while (input >> id >> pass) {
+        cout << "Read from file: id=" << id << ", pass=" << pass << endl; // Debugging output
+        string restOfLine;
+        getline(input, restOfLine); // Read the rest of the line (i.e., the firstname, lastname, mobile)
+        if (id == userID && pass == password) {
+            count = 1;
+            system("cls");
+        }
+    }
 
-       while(input>>id>>pass)
-       {
-           if(id==userID && pass==password)
-           {
-               count=1;
-               system("cls");
-           }
-       }
+    input.close();
 
-       input.close();
+    if (count == 1) {
+        cout << userID << " your login is successful\n Thanks for logging in \n";
+        AdminPage();
+    }
+    else {
+        cout << "LOGIN ERROR\n Please check username and password \n";
+        return;
+    }
 
-       if(count==1)
-       {
-           cout<<userID<<" your login is successful\n Thanks for logging in \n";
-           AdminPage();
 
-       }
-       else
-       {
-           cout<<" LOGIN ERROR \n Please check username and password \n";
-       }
 
 
    }
