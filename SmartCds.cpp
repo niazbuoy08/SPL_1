@@ -16,6 +16,9 @@ void EditFood();
 void Inventory();
 void DeleteFood();
 void AddSalesperson();
+void CustomerPage();
+void UpdateProfile();
+void SalesPersonPage();
 
 
 
@@ -370,7 +373,7 @@ int main()
        if(count==1)
        {
            cout<<userID<<" your login is successful\n Thanks for logging in \n";
-
+           SalesPersonPage();
        }
        else
        {
@@ -415,7 +418,7 @@ int main()
        if(count==1)
        {
            cout<<userID<<" your login is successful\n Thanks for logging in \n";
-           AdminPage();
+           CustomerPage();
 
        }
        else
@@ -442,15 +445,15 @@ int main()
 
        int c;
 
-       cout << "1.Add New Food\n" <<endl;
-       cout << "2.Edit Food\n" <<endl;
-       cout << "3.Delete Food\n" <<endl;
-       cout << "4.Inventory\n" <<endl;
-       cout << "5.Show All food items\n" <<endl;
-       cout << "6.Add Salesperson\n" <<endl;
-       cout << "7.Go to Login Page\n" <<endl;
-       cout << "8.Go to Welcome Page\n" <<endl;
-       cout << "9.Exit\n" <<endl;
+       cout << "1. Add New Food\n" <<endl;
+       cout << "2. Edit Food\n" <<endl;
+       cout << "3. Delete Food\n" <<endl;
+       cout << "4. Inventory\n" <<endl;
+       cout << "5. Show All food items\n" <<endl;
+       cout << "6. Add Salesperson\n" <<endl;
+       cout << "7. Go to Login Page\n" <<endl;
+       cout << "8. Go to Welcome Page\n" <<endl;
+       cout << "9. Exit\n" <<endl;
 
        cout << "***************************************************************\n" <<endl;
        cout << "Please select your option(1-9)" <<endl;
@@ -739,6 +742,149 @@ void DeleteFood()
 
     cout << "\n\tProduct deleted successfully." << endl;
 }
+
+
+   void CustomerPage()
+   {
+       display();
+       cout << "----------------------------- CUSTOMER -----------------------------\n" << endl;
+       cout << "=================================================================\n" << endl;
+
+       int c;
+
+       cout << "1. Purchase History(Last 7 days)\n" <<endl;
+       cout << "2. Update Profile\n" <<endl;
+       cout << "3. Change Password\n" <<endl;
+       cout << "4. Go to Login Page\n" <<endl;
+       cout << "5. Go to Welcome Page\n" <<endl;
+       cout << "6. Exit\n" <<endl;
+
+       cout << "***************************************************************\n" <<endl;
+       cout << "Please select your option(1-6)" <<endl;
+       cin>>c;
+       cout<<endl;
+
+       switch(c)
+       {
+        case 1:
+              system("cls");
+              break;
+
+        case 2:
+              system("cls");
+              UpdateProfile();
+              break;
+        case 3:
+              system("cls");
+              break;
+        case 4:
+              system("cls");
+              login();
+              break;
+
+        case 5:
+              system("cls");
+              main();
+              break;
+
+        default:
+                system("cls");
+                cout<<"Wrong input"<<endl;
+              }
+   }
+
+    void UpdateProfile()
+   {
+       display();
+       cout << "----------------------------- CUSTOMER -----------------------------\n" << endl;
+       cout << "=================================================================\n" << endl;
+
+       int c;
+
+       cout << "1. Update Name\n" <<endl;
+       cout << "2. Update Mobile Number\n" <<endl;
+       cout << "3. Go to Login Page\n" <<endl;
+       cout << "4. Go to Welcome Page\n" <<endl;
+
+       cout << "***************************************************************\n" <<endl;
+       cout << "Please select your option(1-4)" <<endl;
+       cin>>c;
+       cout<<endl;
+
+       switch(c)
+       {
+        case 1:
+              system("cls");
+              break;
+
+        case 2:
+              system("cls");
+              break;
+
+        case 3:
+              system("cls");
+              login();
+              break;
+
+        case 4:
+              system("cls");
+              main();
+              break;
+
+        default:
+                system("cls");
+                cout<<"Wrong input"<<endl;
+              }
+   }
+
+   void SalesPersonPage()
+   {
+       display();
+       cout << "----------------------------- SalesPerson -----------------------------\n" << endl;
+       cout << "=================================================================\n" << endl;
+
+       int c;
+
+       cout << "1. Place Order\n" <<endl;
+       cout << "2. Add New Customer\n" <<endl;
+       cout << "3. Go to Login Page\n" <<endl;
+       cout << "4. Go to Welcome Page\n" <<endl;
+       cout << "5. Exit\n" <<endl;
+
+       cout << "***************************************************************\n" <<endl;
+       cout << "Please select your option(1-4)" <<endl;
+       cin>>c;
+       cout<<endl;
+
+       switch(c)
+       {
+        case 1:
+              system("cls");
+              break;
+
+        case 2:
+              system("cls");
+              registerAsCustomer();
+              break;
+
+        case 3:
+              system("cls");
+              login();
+              break;
+
+        case 4:
+              system("cls");
+              main();
+              break;
+
+        default:
+                system("cls");
+                cout<<"Wrong input"<<endl;
+              }
+   }
+
+
+
 
 
 
