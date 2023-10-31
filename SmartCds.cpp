@@ -720,8 +720,6 @@ void DeleteFood()
             tempFile << setw(20) << left << pname << "  " << setw(20) << left << cname << "  "
                      << setw(10) << left << uprice << "  " << setw(10) << left << quantity << "  "
                      << setw(10) << left << discount << endl;
-        } else {
-            tempFile<<"           "<<endl;
         }
 
         prodNumber++;
