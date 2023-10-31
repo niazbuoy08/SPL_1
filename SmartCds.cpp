@@ -26,13 +26,13 @@ string getPassword() {
     string password = "";
     char ch;
     while (true) {
-        ch = _getch(); // Get a character from the user without displaying it
-        if (ch == 13) // Enter key
+        ch = _getch();
+        if (ch == 13)
             break;
-        password.push_back(ch); // Append the character to the password string
-        cout << "*"; // Display an asterisk to hide the input
+        password.push_back(ch);
+        cout << "*";
     }
-    cout << endl; // Move to the next line
+    cout << endl;
     return password;
 }
 
@@ -600,7 +600,6 @@ int main()
 
    void EditFood()
    {
-
     display();
     cout << "----------------------- MODIFY QUANTITY -----------------------\n" << endl;
     cout << "===============================================================\n" << endl;
@@ -616,7 +615,8 @@ int main()
     int prodNumber = 1;
     string line;
     string itemToModify;
-    int newQuantity;
+    int newQuantity, newDiscount;
+    string newPrice;
 
     cout << setw(7) << "PROD.NO" << setw(24) << "Product Name" << setw(19) << "Company"
          << setw(14) << "Unit Price" << setw(12) << "Quantity" << setw(12) << "Discount" << endl;
@@ -628,18 +628,27 @@ int main()
         ss >> pname >> cname >> uprice >> quantity >> discount;
 
         cout << setw(7) << prodNumber << "  " << setw(20) << pname << "  " << setw(20) << cname
-             << "  " << setw(10) << uprice << "  " << setw(10) << quantity << "  " << setw(10) << discount << endl;
+             << "  " << setw(10) << uprice << "  " << setw(10) << quantity << "  "
+             << setw(10) << discount<<endl;
         prodNumber++;
     }
 
     inputFile.close();
 
-    cout << "Enter the product number you want to modify: ";
-    cin >> itemToModify;
-    cout << "Enter the new quantity: ";
-    cin >> newQuantity;
+    cout<<"Enter the product number you want to modify: ";
+    cin>>itemToModify;
+
+    cout<<"Enter the new quantity: ";
+    cin>>newQuantity;
+
+    cout<<"Enter the new price: ";
+    cin>>newPrice;
+
+    cout<<"Enter the new discount: ";
+    cin>>newDiscount;
 
     inputFile.open("products.txt");
+
     prodNumber = 1;
 
     while (getline(inputFile, line)) {
@@ -649,13 +658,13 @@ int main()
         ss >> pname >> cname >> uprice >> quantity >> discount;
 
         if (prodNumber != stoi(itemToModify)) {
-            tempFile << setw(20) << left << pname << "  " << setw(20) << left << cname << "  "
-                     << setw(10) << left << uprice << "  " << setw(10) << left << quantity << "  "
-                     << setw(10) << left << discount << endl;
+            tempFile<<setw(20)<<left<<pname<<"  "<<setw(20)<<left<<cname<<"  "
+                    <<setw(10)<<left<<uprice<<"  "<<setw(10)<<left<<quantity<<"  "
+                    <<setw(10)<<left<<discount<<endl;
         } else {
-            tempFile << setw(20) << left << pname << "  " << setw(20) << left << cname << "  "
-                     << setw(10) << left << uprice << "  " << setw(10) << left << newQuantity << "  "
-                     << setw(10) << left << discount << endl;
+            tempFile<<setw(20)<<left<<pname<<"  "<<setw(20)<<left<<cname<<"  "
+                    <<setw(10)<<left<<newPrice<<"  "<<setw(10)<<left<<newQuantity
+                    <<"  "<<setw(10)<<left<<newDiscount<<endl;
         }
 
         prodNumber++;
@@ -664,11 +673,11 @@ int main()
     inputFile.close();
     tempFile.close();
 
-
     remove("products.txt");
     rename("temp_products.txt", "products.txt");
 
-    cout << "Quantity modified successfully." << endl;
+    cout<<"Quantity, price and discount modified successfully."<<endl;
+
 }
 void DeleteFood()
  {
