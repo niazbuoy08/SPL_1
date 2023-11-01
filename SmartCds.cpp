@@ -556,7 +556,8 @@ int main()
     else if(op == "No" )
     {
         system("cls");
-        main();
+        AdminPage();
+
     }
 
    }
@@ -595,7 +596,40 @@ int main()
     }
 
     file.close();
-}
+
+       cout << "1. Go to Admin Page\n" <<endl;
+       cout << "2. Go to Login Page\n" <<endl;
+       cout << "3. Go to Welcome Page\n" <<endl;
+
+       int c;
+
+       cin>>c;
+
+       cout<<endl;
+
+       switch(c)
+       {
+        case 1:
+              system("cls");
+              AdminPage();
+              break;
+
+        case 2:
+              system("cls");
+              login();
+              break;
+
+        case 3:
+              system("cls");
+              main();
+              break;
+
+        default:
+                system("cls");
+                cout<<"Wrong input"<<endl;
+              }
+   }
+
 
 
    void EditFood()
@@ -678,6 +712,39 @@ int main()
 
     cout<<"Quantity, price and discount modified successfully."<<endl;
 
+
+       cout << "1. Go to Admin Page\n" <<endl;
+       cout << "2. Go to Login Page\n" <<endl;
+       cout << "3. Go to Welcome Page\n" <<endl;
+
+       int c;
+
+       cin>>c;
+
+       cout<<endl;
+
+       switch(c)
+       {
+        case 1:
+              system("cls");
+              AdminPage();
+              break;
+
+        case 2:
+              system("cls");
+              login();
+              break;
+
+        case 3:
+              system("cls");
+              main();
+              break;
+
+        default:
+                system("cls");
+                cout<<"Wrong input"<<endl;
+              }
+
 }
 void DeleteFood()
  {
@@ -748,6 +815,38 @@ void DeleteFood()
     }
 
     cout << "\n\tProduct deleted successfully." << endl;
+
+
+       cout << "1. Go to Admin Page\n" <<endl;
+       cout << "2. Go to Login Page\n" <<endl;
+       cout << "3. Go to Welcome Page\n" <<endl;
+
+       int c;
+
+       cin>>c;
+       cout<<endl;
+
+       switch(c)
+       {
+        case 1:
+              system("cls");
+              AdminPage();
+              break;
+
+        case 2:
+              system("cls");
+              login();
+              break;
+
+        case 3:
+              system("cls");
+              main();
+              break;
+
+        default:
+                system("cls");
+                cout<<"Wrong input"<<endl;
+              }
 }
 
 
