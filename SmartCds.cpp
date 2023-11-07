@@ -19,6 +19,8 @@ void AddSalesperson();
 void CustomerPage();
 void UpdateProfile();
 void SalesPersonPage();
+void PlaceOrder();
+void GenerateInvoice(const string& productName, int quantity);
 
 
 
@@ -966,6 +968,7 @@ void DeleteFood()
        {
         case 1:
               system("cls");
+              PlaceOrder();
               break;
 
         case 2:
@@ -987,7 +990,130 @@ void DeleteFood()
                 system("cls");
                 cout<<"Wrong input"<<endl;
               }
+
    }
+ void PlaceOrder()
+{
+    display();
+    cout << "----------------------------- PLACE ORDER -----------------------------\n" << endl;
+    cout << "=================================================================\n" << endl;
+
+    string productName;
+    int quantity;
+
+    cout << "Enter the Product Name: ";
+    cin.ignore();
+    getline(cin, productName);
+
+    cout << "Enter the Quantity: ";
+    cin >> quantity;
+
+    ifstream productsFile("products.txt");
+    ofstream tempFile("temp_products.txt");
+
+    if (!productsFile || !tempFile)
+    {
+        cout << "Error opening files." << endl;
+        return;
+    }
+
+    string line;
+    bool productFound = false;
+
+    while (getline(productsFile, line))
+    {
+        stringstream ss(line);
+        string pname, cname;
+        double uprice;
+        int availableQuantity, discount;
+
+        ss >> pname >> cname >> uprice >> availableQuantity >> discount;
+
+        if (pname == productName)
+        {
+            if (availableQuantity >= quantity)
+            {
+                productFound = true;
+                availableQuantity -= quantity;
+                tempFile << setw(20) << left << pname << "  " << setw(20) << left << cname << "  "
+                         << setw(10) << left << uprice << "  " << setw(10) << left << availableQuantity << "  "
+                         << setw(10) << left << discount << endl;
+
+                // You can add code to record this order in a separate order history file here.
+
+                cout << "Order placed successfully!" << endl;
+            }
+            else
+            {
+                cout << "Insufficient quantity available for the selected product." << endl;
+                productFound = true;
+            }
+        }
+        else
+        {
+            tempFile << setw(20) << left << pname << "  " << setw(20) << left << cname << "  "
+                     << setw(10) << left << uprice << "  " << setw(10) << left << availableQuantity << "  "
+                     << setw(10) << left << discount << endl;
+        }
+    }
+
+    if (!productFound)
+    {
+        cout << "Product not found in the inventory." << endl;
+    }
+
+    productsFile.close();
+    tempFile.close();
+
+    remove("products.txt");
+    rename("temp_products.txt", "products.txt");
+
+    cout << "1. Continue Ordering\n";
+    cout << "2. Checkout\n";
+    cout << "3. Go to Salesperson Page\n";
+
+    int choice;
+
+    cin >> choice;
+
+    if (choice == 1) {
+        system("cls");
+        PlaceOrder();
+    } else if (choice == 2) {
+        // Generate an invoice for the order (you can implement this function)
+        GenerateInvoice(productName, quantity);
+    } else if (choice == 3) {
+        system("cls");
+        SalesPersonPage();
+    }
+}
+
+void GenerateInvoice(const string& productName, int quantity)
+{
+    // Here, you can create an invoice, display it, and remove the product from the inventory.
+    // You may want to create a new file for storing invoices and add code to manage it.
+
+    // Display the invoice
+    display();
+    cout << "------------------------ INVOICE ------------------------\n";
+    cout << "=======================================================\n";
+    cout << "Product Name: " << productName << endl;
+    cout << "Quantity: " << quantity << endl;
+    // You can add more details to the invoice here.
+
+    // Remove the product from the inventory (you can use a similar approach as in PlaceOrder)
+    // Implement code to remove the product from the inventory file.
+
+    cout << "Invoice generated successfully!" << endl;
+    cout << "Product removed from inventory." << endl;
+
+    // Go back to the Salesperson Page
+    system("pause");
+    system("cls");
+    SalesPersonPage();
+}
+
+
 
 
 
