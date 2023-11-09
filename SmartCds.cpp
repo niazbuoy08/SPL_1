@@ -24,7 +24,7 @@ void GenerateInvoice(const string& productName, int quantity);
 void ShowAllFoodItems();
 void UpdateName();
 void UpdateMobileNumber();
-
+void ChangePassword();
 
 string getPassword() {
     string password = "";
@@ -893,6 +893,7 @@ void DeleteFood()
               break;
         case 3:
               system("cls");
+              ChangePassword();
               break;
         case 4:
               system("cls");
@@ -1330,6 +1331,86 @@ void UpdateMobileNumber()
 
     cout << "Mobile number has been successfully updated." << endl;
 }
+void ChangePassword()
+{
+    display();
+    cout << "----------------------------- CUSTOMER -----------------------------\n" << endl;
+    cout << "=================================================================\n" << endl;
+
+    int id;
+    cout << "Enter your ID: ";
+    cin >> id;
+
+    string currentPassword;
+    cout << "Enter your current password: ";
+    cin >> currentPassword;
+
+    string newPassword;
+    cout << "Enter your new password: ";
+    cin >> newPassword;
+
+    ifstream inputFile("customer_registration.txt");
+    ofstream tempFile("temp_customer_registration.txt");
+
+    if (!inputFile || !tempFile)
+    {
+        cerr << "Error opening files." << endl;
+        return;
+    }
+
+    string line;
+    int i = 1;
+    bool found = false;
+
+    while (getline(inputFile, line))
+    {
+        stringstream ss(line);
+        string cusername, cpassword, cfname, clname, cmobile;
+
+        ss >> cusername >> cpassword >> cfname >> clname >> cmobile;
+
+        if (i == id && cpassword == currentPassword)
+        {
+            tempFile << setw(20) << left << cusername << "  " << setw(20) << left << newPassword << "  "
+                     << setw(10) << left << cfname << "  " << setw(10) << left << clname << "  " << left << cmobile
+                     << endl;
+            found = true;
+            cout << "Password changed successfully." << endl;
+        }
+        else
+        {
+            tempFile << setw(20) << left << cusername << "  " << setw(20) << left << cpassword << "  "
+                     << setw(10) << left << cfname << "  " << setw(10) << left << clname << "  " << left << cmobile
+                     << endl;
+        }
+        i++;
+    }
+
+    inputFile.close();
+    tempFile.close();
+
+    if (!found)
+    {
+        cerr << "Invalid ID or current password." << endl;
+        remove("temp_customer_registration.txt");
+        return;
+    }
+
+    if (remove("customer_registration.txt") != 0)
+    {
+        cerr << "Error deleting the original file." << endl;
+        return;
+    }
+
+    if (rename("temp_customer_registration.txt", "customer_registration.txt") != 0)
+    {
+        cerr << "Error renaming the temporary file." << endl;
+        return;
+    }
+}
+
+
+
 
 
 
