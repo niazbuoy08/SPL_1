@@ -1,4 +1,4 @@
 Shingara              Iutcds                12          25          2         
 Samosa                Iutcds                20          40          5         
 chocolate             nestle                50          20          0         
-chips                 pepsico               25          16          0         
+chips                 pepsico               20          10          0         

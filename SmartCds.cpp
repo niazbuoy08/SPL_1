@@ -21,7 +21,9 @@ void UpdateProfile();
 void SalesPersonPage();
 void PlaceOrder();
 void GenerateInvoice(const string& productName, int quantity);
-
+void ShowAllFoodItems();
+void UpdateName();
+void UpdateMobileNumber();
 
 
 string getPassword() {
@@ -213,6 +215,8 @@ int main()
     cout << "Registration successful!" << endl;
 
    }
+   string cusername, cpassword, cfname,clname, cmobile ;
+
    void registerAsCustomer()
    {
     display();
@@ -222,19 +226,19 @@ int main()
     string username, password, fname,lname, mobile ;
 
     cout << "Enter a username: ";
-    cin >> username;
+    cin >> cusername;
 
     cout << "Enter a password: ";
-    cin >> password;
+    cin >> cpassword;
 
     cout << "Enter  your First Name: ";
-    cin >> fname;
+    cin >> cfname;
 
     cout << "Enter  your Last Name: ";
-    cin >> lname;
+    cin >> clname;
 
     cout << "Enter  Mobile Number: ";
-    cin >> mobile;
+    cin >> cmobile;
 
     ofstream file("customer_registration.txt", ios::app);
 
@@ -243,7 +247,9 @@ int main()
         return;
     }
 
-    file << username << " " << password << " " << fname << " " << lname << " " << mobile <<  endl;
+    file<<setw(20)<<left<<cusername<<"  "<<setw(20)<<left<<cpassword<<"  "
+                    <<setw(10)<<left<<cfname<<"  "<<setw(10)<<left<<clname<<"  "<<left<<cmobile
+                    <<endl;
     file.close();
 
     cout << "Registration successful!" << endl;
@@ -481,7 +487,10 @@ int main()
               system("cls");
               Inventory();
               break;
-
+        case 5:
+              system("cls");
+              ShowAllFoodItems();
+              break;
         case 6:
               system("cls");
               AddSalesperson();
@@ -637,7 +646,7 @@ int main()
    void EditFood()
    {
     display();
-    cout << "----------------------- MODIFY QUANTITY -----------------------\n" << endl;
+    cout << "----------------------- EDIT FOOD -----------------------\n" << endl;
     cout << "===============================================================\n" << endl;
 
     ifstream inputFile("products.txt");
@@ -923,10 +932,12 @@ void DeleteFood()
        {
         case 1:
               system("cls");
+              UpdateName();
               break;
 
         case 2:
               system("cls");
+              UpdateMobileNumber();
               break;
 
         case 3:
@@ -943,6 +954,9 @@ void DeleteFood()
                 system("cls");
                 cout<<"Wrong input"<<endl;
               }
+
+
+
    }
 
    void SalesPersonPage()
@@ -1112,6 +1126,213 @@ void GenerateInvoice(const string& productName, int quantity)
     system("cls");
     SalesPersonPage();
 }
+void ShowAllFoodItems() {
+
+    display();
+    cout << "----------------------------- ADMIN -----------------------------\n" << endl;
+    cout << "=================================================================\n" << endl;
+
+    ifstream file("products.txt");
+
+    if (!file) {
+        cout << "Error opening file." << endl;
+        return;
+    }
+
+    string line;
+    int prodNumber = 1;
+
+    cout << setw(7) << "PROD.NO" << setw(24) << "Product Name" << setw(19) << "Company"
+         << endl;
+
+
+    while (getline(file, line)) {
+        stringstream ss(line);
+        string pname, cname;
+
+
+        ss >> pname >> cname ;
+
+
+        cout << setw(7) << prodNumber << "  " << setw(20) << pname << "  " << setw(20) << cname
+              << endl;
+        prodNumber++;
+    }
+
+    file.close();
+
+       cout << "1. Go to Admin Page\n" <<endl;
+       cout << "2. Go to Login Page\n" <<endl;
+       cout << "3. Go to Welcome Page\n" <<endl;
+
+       int c;
+
+       cin>>c;
+
+       cout<<endl;
+
+       switch(c)
+       {
+        case 1:
+              system("cls");
+              AdminPage();
+              break;
+
+        case 2:
+              system("cls");
+              login();
+              break;
+
+        case 3:
+              system("cls");
+              main();
+              break;
+
+        default:
+                system("cls");
+                cout<<"Wrong input"<<endl;
+              }
+   }
+void UpdateName()
+{
+    display();
+    cout << "----------------------------- CUSTOMER -----------------------------\n" << endl;
+    cout << "=================================================================\n" << endl;
+
+    int id;
+    cout << "Enter your ID: ";
+    cin >> id;
+
+    string updatedName;
+    cout << "Enter Updated Name: ";
+    cin.ignore();
+    getline(cin, updatedName);
+
+    ifstream inputFile("customer_registration.txt");
+    ofstream tempFile("temp_customer_registration.txt");
+
+    if (!inputFile || !tempFile) {
+        cerr << "Error opening files." << endl;
+        return;
+    }
+
+    string line;
+    int i = 1;
+    bool found = false;
+
+    while (getline(inputFile, line)) {
+        stringstream ss(line);
+        string cusername, cpassword, cfname, clname, cmobile;
+
+        ss >> cusername >> cpassword >> cfname >> clname >> cmobile;
+
+        if (i != id) {
+            tempFile << setw(20) << left << cusername << "  " << setw(20) << left << cpassword << "  "
+                     << setw(10) << left << cfname << "  " << setw(10) << left << clname << "  " << left << cmobile
+                     << endl;
+
+        } else {
+            tempFile << setw(20) << left << updatedName << "  " << setw(20) << left << cpassword << "  "
+                     << setw(10) << left << cfname << "  " << setw(10) << left << clname
+                     << "  " << left << cmobile << endl;
+            found = true;
+        }
+        i++;
+    }
+
+    inputFile.close();
+    tempFile.close();
+
+    if (!found) {
+        cerr << "Customer ID not found." << endl;
+        remove("temp_customer_registration.txt");
+        return;
+    }
+
+    if (remove("customer_registration.txt") != 0) {
+        cerr << "Error deleting the original file." << endl;
+        return;
+    }
+
+    if (rename("temp_customer_registration.txt", "customer_registration.txt") != 0) {
+        cerr << "Error renaming the temporary file." << endl;
+        return;
+    }
+
+    cout << "The name has been successfully updated." << endl;
+}
+
+void UpdateMobileNumber()
+{
+    display();
+    cout << "----------------------------- CUSTOMER -----------------------------\n" << endl;
+    cout << "=================================================================\n" << endl;
+
+    int id;
+    cout << "Enter your ID: ";
+    cin >> id;
+
+    string updatedNumber;
+    cout << "Enter Updated Mobile Number: ";
+    cin.ignore();
+    getline(cin, updatedNumber);
+
+    ifstream inputFile("customer_registration.txt");
+    ofstream tempFile("temp_customer_registration.txt");
+
+    if (!inputFile || !tempFile) {
+        cerr << "Error opening files." << endl;
+        return;
+    }
+
+    string line;
+    int i = 1;
+    bool found = false;
+
+    while (getline(inputFile, line)) {
+        stringstream ss(line);
+        string cusername, cpassword, cfname, clname, cmobile;
+
+        ss >> cusername >> cpassword >> cfname >> clname >> cmobile;
+
+        if (i != id) {
+            tempFile << setw(20) << left << cusername << "  " << setw(20) << left << cpassword << "  "
+                     << setw(10) << left << cfname << "  " << setw(10) << left << clname << "  " << left << cmobile
+                     << endl;
+
+        } else {
+            tempFile << setw(20) << left << cusername << "  " << setw(20) << left << cpassword << "  "
+                     << setw(10) << left << cfname << "  " << setw(10) << left << clname
+                     << "  " << left << updatedNumber << endl;
+            found = true;
+        }
+        i++;
+    }
+
+    inputFile.close();
+    tempFile.close();
+
+    if (!found) {
+        cerr << "Customer ID not found." << endl;
+        remove("temp_customer_registration.txt");
+        return;
+    }
+
+    if (remove("customer_registration.txt") != 0) {
+        cerr << "Error deleting the original file." << endl;
+        return;
+    }
+
+    if (rename("temp_customer_registration.txt", "customer_registration.txt") != 0) {
+        cerr << "Error renaming the temporary file." << endl;
+        return;
+    }
+
+    cout << "Mobile number has been successfully updated." << endl;
+}
+
+
+
 
 
 
