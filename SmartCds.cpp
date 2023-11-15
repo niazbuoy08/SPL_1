@@ -25,7 +25,7 @@ void ShowAllFoodItems();
 void UpdateName();
 void UpdateMobileNumber();
 void ChangePassword();
-
+void generateCustomerID();
 string getPassword() {
     string password = "";
     char ch;
@@ -215,8 +215,44 @@ int main()
     cout << "Registration successful!" << endl;
 
    }
-   string cusername, cpassword, cfname,clname, cmobile ;
+   string cusername, cpassword, cfname,clname, cmobile,customerId ;
+   void generateCustomerID(string& customerId)
+   {
+       const int maxAttempts=1000;
+       int attempt=0;
 
+       do
+       {
+         const int randomPart=rand()%1000;
+         customerId=to_string(randomPart);
+         ifstream file("customer_registration.txt");
+         string line;
+
+         bool idExists=false;
+         while(getline(file,line))
+         {
+             if(line.find(customerId)!=string::npos)
+             {
+                 idExists=true;
+                 break;
+             }
+         }
+         file.close();
+
+         if(!idExists)
+         {
+             break;
+         }
+         attempt++;
+
+       }while(attempt<maxAttempts);
+
+        if(attempt==maxAttempts)
+        {
+               cerr<<"Error:Unable to generate Customer ID"<<endl;
+               exit(1);
+        }
+   }
    void registerAsCustomer()
    {
     display();
@@ -240,6 +276,8 @@ int main()
     cout << "Enter  Mobile Number: ";
     cin >> cmobile;
 
+    generateCustomerID(customerId);
+
     ofstream file("customer_registration.txt", ios::app);
 
     if (!file) {
@@ -248,11 +286,11 @@ int main()
     }
 
     file<<setw(20)<<left<<cusername<<"  "<<setw(20)<<left<<cpassword<<"  "
-                    <<setw(10)<<left<<cfname<<"  "<<setw(10)<<left<<clname<<"  "<<left<<cmobile
+                    <<setw(10)<<left<<cfname<<"  "<<setw(10)<<left<<clname<<"  "<<left<<cmobile<<"    "<<customerId
                     <<endl;
     file.close();
 
-    cout << "Registration successful!" << endl;
+    cout << "Registration successful! Your Customer ID is: "<<customerId<< endl;
 
    }
 
@@ -1200,12 +1238,12 @@ void UpdateName()
     cout << "----------------------------- CUSTOMER -----------------------------\n" << endl;
     cout << "=================================================================\n" << endl;
 
-    int id;
+    string id;
     cout << "Enter your ID: ";
     cin >> id;
 
     string updatedName;
-    cout << "Enter Updated Name: ";
+    cout << "Enter New Username: ";
     cin.ignore();
     getline(cin, updatedName);
 
@@ -1218,27 +1256,27 @@ void UpdateName()
     }
 
     string line;
-    int i = 1;
+
     bool found = false;
 
     while (getline(inputFile, line)) {
         stringstream ss(line);
-        string cusername, cpassword, cfname, clname, cmobile;
+        string cusername, cpassword, cfname, clname, cmobile, customerId;
 
-        ss >> cusername >> cpassword >> cfname >> clname >> cmobile;
+        ss >> cusername >> cpassword >> cfname >> clname >> cmobile >>customerId;
 
-        if (i != id) {
+        if (customerId!=id) {
             tempFile << setw(20) << left << cusername << "  " << setw(20) << left << cpassword << "  "
-                     << setw(10) << left << cfname << "  " << setw(10) << left << clname << "  " << left << cmobile
+                     << setw(10) << left << cfname << "  " << setw(10) << left << clname << "  " << left << cmobile<<"  "<<customerId
                      << endl;
 
         } else {
             tempFile << setw(20) << left << updatedName << "  " << setw(20) << left << cpassword << "  "
                      << setw(10) << left << cfname << "  " << setw(10) << left << clname
-                     << "  " << left << cmobile << endl;
+                     << "  " << left << cmobile << "  "<<customerId<<endl;
             found = true;
         }
-        i++;
+
     }
 
     inputFile.close();
@@ -1269,7 +1307,7 @@ void UpdateMobileNumber()
     cout << "----------------------------- CUSTOMER -----------------------------\n" << endl;
     cout << "=================================================================\n" << endl;
 
-    int id;
+    string id;
     cout << "Enter your ID: ";
     cin >> id;
 
@@ -1287,27 +1325,27 @@ void UpdateMobileNumber()
     }
 
     string line;
-    int i = 1;
+
     bool found = false;
 
     while (getline(inputFile, line)) {
         stringstream ss(line);
-        string cusername, cpassword, cfname, clname, cmobile;
+        string cusername, cpassword, cfname, clname, cmobile,customerId;
 
-        ss >> cusername >> cpassword >> cfname >> clname >> cmobile;
+        ss >> cusername >> cpassword >> cfname >> clname >> cmobile>>customerId;
 
-        if (i != id) {
+        if (customerId!=id) {
             tempFile << setw(20) << left << cusername << "  " << setw(20) << left << cpassword << "  "
-                     << setw(10) << left << cfname << "  " << setw(10) << left << clname << "  " << left << cmobile
+                     << setw(10) << left << cfname << "  " << setw(10) << left << clname << "  " << left << cmobile<<"  "<<customerId
                      << endl;
 
         } else {
             tempFile << setw(20) << left << cusername << "  " << setw(20) << left << cpassword << "  "
                      << setw(10) << left << cfname << "  " << setw(10) << left << clname
-                     << "  " << left << updatedNumber << endl;
+                     << "  " << left << updatedNumber <<"  "<<customerId<< endl;
             found = true;
         }
-        i++;
+
     }
 
     inputFile.close();
@@ -1337,7 +1375,7 @@ void ChangePassword()
     cout << "----------------------------- CUSTOMER -----------------------------\n" << endl;
     cout << "=================================================================\n" << endl;
 
-    int id;
+    string id;
     cout << "Enter your ID: ";
     cin >> id;
 
@@ -1359,7 +1397,7 @@ void ChangePassword()
     }
 
     string line;
-    int i = 1;
+
     bool found = false;
 
     while (getline(inputFile, line))
@@ -1367,12 +1405,12 @@ void ChangePassword()
         stringstream ss(line);
         string cusername, cpassword, cfname, clname, cmobile;
 
-        ss >> cusername >> cpassword >> cfname >> clname >> cmobile;
+        ss >> cusername >> cpassword >> cfname >> clname >> cmobile>>customerId;
 
-        if (i == id && cpassword == currentPassword)
+        if (customerId==id)
         {
             tempFile << setw(20) << left << cusername << "  " << setw(20) << left << newPassword << "  "
-                     << setw(10) << left << cfname << "  " << setw(10) << left << clname << "  " << left << cmobile
+                     << setw(10) << left << cfname << "  " << setw(10) << left << clname << "  " << left << cmobile<<"  "<<customerId
                      << endl;
             found = true;
             cout << "Password changed successfully." << endl;
@@ -1380,10 +1418,10 @@ void ChangePassword()
         else
         {
             tempFile << setw(20) << left << cusername << "  " << setw(20) << left << cpassword << "  "
-                     << setw(10) << left << cfname << "  " << setw(10) << left << clname << "  " << left << cmobile
+                     << setw(10) << left << cfname << "  " << setw(10) << left << clname << "  " << left << cmobile<<"  "<<customerId
                      << endl;
         }
-        i++;
+
     }
 
     inputFile.close();
