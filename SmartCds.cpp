@@ -20,12 +20,15 @@ void CustomerPage();
 void UpdateProfile();
 void SalesPersonPage();
 void PlaceOrder();
-void GenerateInvoice(const string& productName, int quantity);
+void EditOrder();
+void GenerateInvoice(const string& OrderedProduct, int OrderedQuantity);
 void ShowAllFoodItems();
 void UpdateName();
 void UpdateMobileNumber();
 void ChangePassword();
 void generateCustomerID();
+
+
 string getPassword() {
     string password = "";
     char ch;
@@ -50,7 +53,9 @@ int main()
    cout << "1. REGISTER\n" <<endl;
    cout << "2. LOGIN\n" <<endl;
    cout << "3. EXIT\n" <<endl;
-   cout << "****************************************************************\n" <<endl;
+
+   cout << "***************************************************************\n" <<endl;
+   cout << "Please select your option(1-3)" <<endl;
 
    cin >> option;
    cout << endl;
@@ -96,7 +101,9 @@ int main()
        cout << "3. As a CUSTOMER\n" << endl;
        cout << "4. Return to Welcome Page\n" << endl;
        cout << "5. EXIT\n" << endl;
-       cout << "***********************************************************" << endl;
+
+       cout << "***************************************************************\n" <<endl;
+       cout << "Please select your option(1-5)" <<endl;
 
        cin >> option;
        cout << endl;
@@ -146,7 +153,9 @@ int main()
        cout << "2. As a CUSTOMER\n" << endl;
        cout << "3. Return to Welcome Page\n" << endl;
        cout << "4. EXIT\n" << endl;
-       cout << "***************************************************************" << endl;
+
+       cout << "***************************************************************\n" <<endl;
+       cout << "Please select your option(1-4)" <<endl;
 
        cin >> option;
        cout << endl;
@@ -543,6 +552,10 @@ int main()
               system("cls");
               main();
               break;
+        case 9:
+              system("cls");
+              cout << "Exiting the program\n" << endl;
+              break;
 
         default:
                 system("cls");
@@ -582,7 +595,7 @@ int main()
 
    cout<<"Product has been successfully added"<<endl;
 
-   cout<<"===============================================\n"<<endl;
+   cout<<"======================================================================\n"<<endl;
 
    cout<<"Do you want to add another product?([Yes] or [No]):";
 
@@ -650,6 +663,9 @@ int main()
        cout << "2. Go to Login Page\n" <<endl;
        cout << "3. Go to Welcome Page\n" <<endl;
 
+       cout << "***************************************************************\n" <<endl;
+       cout << "Please select your option(1-3)" <<endl;
+
        int c;
 
        cin>>c;
@@ -684,7 +700,7 @@ int main()
    void EditFood()
    {
     display();
-    cout << "----------------------- EDIT FOOD -----------------------\n" << endl;
+    cout << "-------------------------- EDIT FOOD --------------------------\n" << endl;
     cout << "===============================================================\n" << endl;
 
     ifstream inputFile("products.txt");
@@ -766,6 +782,9 @@ int main()
        cout << "2. Go to Login Page\n" <<endl;
        cout << "3. Go to Welcome Page\n" <<endl;
 
+       cout << "***************************************************************\n" <<endl;
+       cout << "Please select your option(1-3)" <<endl;
+
        int c;
 
        cin>>c;
@@ -801,7 +820,7 @@ void DeleteFood()
 
     display();
     cout << "----------------------------- DELETE FOOD -----------------------------\n" << endl;
-    cout << "=================================================================\n" << endl;
+    cout << "=======================================================================\n" << endl;
 
     ifstream inputFile("products.txt");
     ofstream tempFile("tempo_products.txt");
@@ -870,6 +889,9 @@ void DeleteFood()
        cout << "2. Go to Login Page\n" <<endl;
        cout << "3. Go to Welcome Page\n" <<endl;
 
+       cout << "***************************************************************\n" <<endl;
+       cout << "Please select your option(1-3)" <<endl;
+
        int c;
 
        cin>>c;
@@ -903,7 +925,7 @@ void DeleteFood()
    {
        display();
        cout << "----------------------------- CUSTOMER -----------------------------\n" << endl;
-       cout << "=================================================================\n" << endl;
+       cout << "====================================================================\n" << endl;
 
        int c;
 
@@ -914,7 +936,7 @@ void DeleteFood()
        cout << "5. Go to Welcome Page\n" <<endl;
        cout << "6. Exit\n" <<endl;
 
-       cout << "***************************************************************\n" <<endl;
+       cout << "*******************************************************************\n" <<endl;
        cout << "Please select your option(1-6)" <<endl;
        cin>>c;
        cout<<endl;
@@ -943,6 +965,11 @@ void DeleteFood()
               main();
               break;
 
+        case 6:
+              system("cls");
+              cout << "Exiting the program\n" << endl;
+              break;
+
         default:
                 system("cls");
                 cout<<"Wrong input"<<endl;
@@ -953,7 +980,7 @@ void DeleteFood()
    {
        display();
        cout << "----------------------------- CUSTOMER -----------------------------\n" << endl;
-       cout << "=================================================================\n" << endl;
+       cout << "====================================================================\n" << endl;
 
        int c;
 
@@ -962,7 +989,7 @@ void DeleteFood()
        cout << "3. Go to Login Page\n" <<endl;
        cout << "4. Go to Welcome Page\n" <<endl;
 
-       cout << "***************************************************************\n" <<endl;
+       cout << "*******************************************************************\n" <<endl;
        cout << "Please select your option(1-4)" <<endl;
        cin>>c;
        cout<<endl;
@@ -1002,7 +1029,7 @@ void DeleteFood()
    {
        display();
        cout << "----------------------------- SalesPerson -----------------------------\n" << endl;
-       cout << "=================================================================\n" << endl;
+       cout << "=======================================================================\n" << endl;
 
        int c;
 
@@ -1012,8 +1039,8 @@ void DeleteFood()
        cout << "4. Go to Welcome Page\n" <<endl;
        cout << "5. Exit\n" <<endl;
 
-       cout << "***************************************************************\n" <<endl;
-       cout << "Please select your option(1-4)" <<endl;
+       cout << "**********************************************************************\n" <<endl;
+       cout << "Please select your option(1-5)" <<endl;
        cin>>c;
        cout<<endl;
 
@@ -1039,27 +1066,58 @@ void DeleteFood()
               main();
               break;
 
+        case 5:
+              system("cls");
+              cout << "Exiting the program\n" << endl;
+              break;
+
         default:
                 system("cls");
                 cout<<"Wrong input"<<endl;
               }
 
    }
+
+string OrderedProduct;
+int OrderedQuantity;
+
  void PlaceOrder()
 {
     display();
-    cout << "----------------------------- PLACE ORDER -----------------------------\n" << endl;
-    cout << "=================================================================\n" << endl;
-
-    string productName;
-    int quantity;
+    cout << "--------------------------------- PLACE ORDER -----------------------------\n" << endl;
+    cout << "============================================================================\n" << endl;
 
     cout << "Enter the Product Name: ";
     cin.ignore();
-    getline(cin, productName);
+    getline(cin, OrderedProduct);
 
-    cout << "Enter the Quantity: ";
-    cin >> quantity;
+    cout << "Enter the OrderedQuantity: ";
+    cin >> OrderedQuantity;
+
+    cout << "1. Edit Order\n";
+    cout << "2. Confirm Order\n";
+
+    int choice;
+
+    cin >> choice;
+
+    if (choice == 1)
+        {
+        system("cls");
+        PlaceOrder();
+        }
+    else if (choice == 2)
+        {
+        system("cls");
+        EditOrder();
+        }
+}
+
+void EditOrder()
+{
+    display();
+    cout << "--------------------------------- PLACE ORDER -----------------------------\n" << endl;
+    cout << "============================================================================\n" << endl;
 
     ifstream productsFile("products.txt");
     ofstream tempFile("temp_products.txt");
@@ -1082,12 +1140,12 @@ void DeleteFood()
 
         ss >> pname >> cname >> uprice >> availableQuantity >> discount;
 
-        if (pname == productName)
+        if (pname == OrderedProduct)
         {
-            if (availableQuantity >= quantity)
+            if (availableQuantity >= OrderedQuantity)
             {
                 productFound = true;
-                availableQuantity -= quantity;
+                availableQuantity -= OrderedQuantity;
                 tempFile << setw(20) << left << pname << "  " << setw(20) << left << cname << "  "
                          << setw(10) << left << uprice << "  " << setw(10) << left << availableQuantity << "  "
                          << setw(10) << left << discount << endl;
@@ -1125,33 +1183,41 @@ void DeleteFood()
     cout << "2. Checkout\n";
     cout << "3. Go to Salesperson Page\n";
 
+    cout << "***************************************************************\n" <<endl;
+    cout << "Please select your option(1-3)" <<endl;
+
     int choice;
 
     cin >> choice;
 
-    if (choice == 1) {
+    if (choice == 1)
+    {
         system("cls");
         PlaceOrder();
-    } else if (choice == 2) {
+    }
+    else if (choice == 2)
+    {
         // Generate an invoice for the order (you can implement this function)
-        GenerateInvoice(productName, quantity);
-    } else if (choice == 3) {
+        GenerateInvoice(OrderedProduct, OrderedQuantity);
+    }
+    else if (choice == 3)
+    {
         system("cls");
         SalesPersonPage();
     }
 }
 
-void GenerateInvoice(const string& productName, int quantity)
+void GenerateInvoice(const string& OrderedProduct, int OrderedQuantity)
 {
     // Here, you can create an invoice, display it, and remove the product from the inventory.
     // You may want to create a new file for storing invoices and add code to manage it.
 
     // Display the invoice
     display();
-    cout << "------------------------ INVOICE ------------------------\n";
-    cout << "=======================================================\n";
-    cout << "Product Name: " << productName << endl;
-    cout << "Quantity: " << quantity << endl;
+    cout << "-------------------------------- INVOICE ------------------------------------\n";
+    cout << "=============================================================================\n";
+    cout << "Product Name: " << OrderedProduct << endl;
+    cout << "Quantity: " << OrderedQuantity << endl;
     // You can add more details to the invoice here.
 
     // Remove the product from the inventory (you can use a similar approach as in PlaceOrder)
@@ -1168,8 +1234,8 @@ void GenerateInvoice(const string& productName, int quantity)
 void ShowAllFoodItems() {
 
     display();
-    cout << "----------------------------- ADMIN -----------------------------\n" << endl;
-    cout << "=================================================================\n" << endl;
+    cout << "--------------------------------- ADMIN -------------------------------\n" << endl;
+    cout << "=======================================================================\n" << endl;
 
     ifstream file("products.txt");
 
@@ -1204,6 +1270,9 @@ void ShowAllFoodItems() {
        cout << "2. Go to Login Page\n" <<endl;
        cout << "3. Go to Welcome Page\n" <<endl;
 
+       cout << "***************************************************************\n" <<endl;
+       cout << "Please select your option(1-3)" <<endl;
+
        int c;
 
        cin>>c;
@@ -1235,8 +1304,8 @@ void ShowAllFoodItems() {
 void UpdateName()
 {
     display();
-    cout << "----------------------------- CUSTOMER -----------------------------\n" << endl;
-    cout << "=================================================================\n" << endl;
+    cout << "----------------------------- CUSTOMER ------------------------------\n" << endl;
+    cout << "=====================================================================\n" << endl;
 
     string id;
     cout << "Enter your ID: ";
@@ -1305,7 +1374,7 @@ void UpdateMobileNumber()
 {
     display();
     cout << "----------------------------- CUSTOMER -----------------------------\n" << endl;
-    cout << "=================================================================\n" << endl;
+    cout << "====================================================================\n" << endl;
 
     string id;
     cout << "Enter your ID: ";
@@ -1373,7 +1442,7 @@ void ChangePassword()
 {
     display();
     cout << "----------------------------- CUSTOMER -----------------------------\n" << endl;
-    cout << "=================================================================\n" << endl;
+    cout << "=====================================================================\n" << endl;
 
     string id;
     cout << "Enter your ID: ";
