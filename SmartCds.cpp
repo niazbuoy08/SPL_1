@@ -4,6 +4,7 @@
 #include<string.h>
 #include <conio.h>
 #include <iomanip>
+#include<ctime>
 using namespace std;
 
 void login();
@@ -21,7 +22,7 @@ void UpdateProfile();
 void SalesPersonPage();
 void PlaceOrder();
 void EditOrder();
-void GenerateInvoice(const string& OrderedProduct, int OrderedQuantity);
+void GenerateInvoice(const string& OrderedProduct, int OrderedQuantity, double OrderedPrice);
 void ShowAllFoodItems();
 void UpdateName();
 void UpdateMobileNumber();
@@ -1113,11 +1114,11 @@ int OrderedQuantity;
         }
 }
 
-void EditOrder()
-{
+
+void EditOrder() {
     display();
     cout << "--------------------------------- PLACE ORDER -----------------------------\n" << endl;
-    cout << "============================================================================\n" << endl;
+    cout << "=============================================================================\n" << endl;
 
     ifstream productsFile("products.txt");
     ofstream tempFile("temp_products.txt");
@@ -1130,12 +1131,12 @@ void EditOrder()
 
     string line;
     bool productFound = false;
+    double uprice = 0.0; // Initialize uprice
 
     while (getline(productsFile, line))
     {
         stringstream ss(line);
         string pname, cname;
-        double uprice;
         int availableQuantity, discount;
 
         ss >> pname >> cname >> uprice >> availableQuantity >> discount;
@@ -1197,8 +1198,7 @@ void EditOrder()
     }
     else if (choice == 2)
     {
-        // Generate an invoice for the order (you can implement this function)
-        GenerateInvoice(OrderedProduct, OrderedQuantity);
+        GenerateInvoice(OrderedProduct, OrderedQuantity, uprice);
     }
     else if (choice == 3)
     {
@@ -1207,30 +1207,50 @@ void EditOrder()
     }
 }
 
-void GenerateInvoice(const string& OrderedProduct, int OrderedQuantity)
+
+void GenerateInvoice(const string& OrderedProduct, int OrderedQuantity, double OrderedPrice)
 {
-    // Here, you can create an invoice, display it, and remove the product from the inventory.
-    // You may want to create a new file for storing invoices and add code to manage it.
+    time_t now = time(0);
+    char* dt = ctime(&now);
 
-    // Display the invoice
-    display();
-    cout << "-------------------------------- INVOICE ------------------------------------\n";
-    cout << "=============================================================================\n";
-    cout << "Product Name: " << OrderedProduct << endl;
-    cout << "Quantity: " << OrderedQuantity << endl;
-    // You can add more details to the invoice here.
+    ofstream invoiceFile("invoice.txt"); // Open the invoice file
 
-    // Remove the product from the inventory (you can use a similar approach as in PlaceOrder)
-    // Implement code to remove the product from the inventory file.
+    if (!invoiceFile) {
+        cout << "Error opening file." << endl;
+        return;
+    }
 
-    cout << "Invoice generated successfully!" << endl;
-    cout << "Product removed from inventory." << endl;
+    string invoice;
+    invoice += "\n\n";
+    invoice += "=============================================================================\n";
+    invoice += "============================== INVOICE =====================================\n";
+    invoice += "=============================================================================\n";
+    invoice += "\n";
+    invoice += "Invoice Date: " + string(dt) + "\n";
+    invoice += "Product Name: " + OrderedProduct + "\n";
+    invoice += "Quantity: " + to_string(OrderedQuantity) + "\n";
+    invoice += "Price per item: " + to_string(OrderedPrice) + "\n";
+    invoice += "Total: " + to_string(OrderedPrice * OrderedQuantity) + "\n";
+    invoice += "\n";
+    invoice += "=============================================================================\n";
+    invoice += "Invoice generated successfully!\n";
+    invoice += "Product removed from inventory.\n";
+    invoice += "=============================================================================\n";
+    invoice += "\n\n";
 
-    // Go back to the Salesperson Page
+    cout << invoice; // Print the invoice to the console
+    invoiceFile << invoice; // Write the invoice to the file
+
+    invoiceFile.close(); // Close the invoice file
+
+    cout << "Invoice generated and saved to invoice.txt successfully!" << endl;
+
     system("pause");
     system("cls");
     SalesPersonPage();
 }
+
+
 void ShowAllFoodItems() {
 
     display();
