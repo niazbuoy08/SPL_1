@@ -1,0 +1,64 @@
+# depslib dependency file v1.0
+1705092997 source:d:\2.1\smartcds\admin.cpp
+	"Admin.h"
+	"SmartCDS.h"
+	<iostream>
+
+1705128536 d:\2.1\smartcds\admin.h
+	"User.h"
+	<iostream>
+	<fstream>
+	"FileManager.h"
+	"SmartCDS.h"
+
+1705092533 d:\2.1\smartcds\user.h
+	<string>
+
+1705088003 source:d:\2.1\smartcds\customer.cpp
+	"Customer.h"
+	<iostream>
+
+1705081864 d:\2.1\smartcds\customer.h
+	"User.h"
+
+1705128784 source:d:\2.1\smartcds\main.cpp
+	"SmartCDS.h"
+	"Admin.h"
+
+1705091317 d:\2.1\smartcds\smartcds.h
+	<string>
+	<iostream>
+	<sstream>
+
+1705081789 source:d:\2.1\smartcds\salesperson.cpp
+	"Salesperson.h"
+	<iostream>
+
+1705081775 d:\2.1\smartcds\salesperson.h
+	"User.h"
+
+1705092533 source:d:\2.1\smartcds\user.cpp
+	"User.h"
+	<iostream>
+
+1705082533 source:d:\2.1\smartcds\filemanager.cpp
+	"FileManager.h"
+	<fstream>
+	<sstream>
+	<iostream>
+
+1705082020 d:\2.1\smartcds\filemanager.h
+	<string>
+
+1705128662 source:d:\2.1\smartcds\smartcds.cpp
+	"SmartCDS.h"
+	"FileManager.h"
+	"Admin.h"
+	"Salesperson.h"
+	"Customer.h"
+	<iostream>
+	<ctime>
+	<cstdlib>
+	<sstream>
+	<conio.h>
+
