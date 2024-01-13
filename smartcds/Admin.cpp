@@ -1,6 +1,9 @@
 #include "Admin.h"
 #include "SmartCDS.h"
 #include <iostream>
+#include <iomanip>
+
+using namespace std;
 
 Admin::Admin(const std::string& username, const std::string& password, const std::string& firstName,
              const std::string& lastName, const std::string& mobileNumber)
@@ -96,20 +99,356 @@ void Admin::display() {
     std::cout << "================================================================\n" << std::endl;
 }
 
+void Admin::YesOrNoCheck() {
+    char choice;
+    std::cout << "Enter [Y] for Yes or [N] for No: ";
+    std::cin >> choice;
+
+    while (toupper(choice) != 'Y' && toupper(choice) != 'N') {
+        std::cout << "Invalid input! Please enter [Y] for Yes or [N] for No: ";
+        std::cin >> choice;
+    }
+
+    if (toupper(choice) == 'Y') {
+        system("cls");
+        AddNewFood(); // Call the function to add another product
+    } else {
+        system("cls");
+        AdminPage(); // Go back to the Admin page
+    }
+}
+
+
+ string pname;
+   string cname;
+
+   double uprice;
+   int quantity;
+   int discount;
+
 void Admin::AddNewFood() {
-    // Implementation of AddNewFood
+     display();
+   cout << "----------------------------- ADMIN -----------------------------\n" << endl;
+   cout << "=================================================================\n" << endl;
+
+
+   ofstream file("products.txt",ios::app);
+
+   cout<<"Enter Product Name for the next product:";
+   cin>>pname;
+   cout<<"Enter Company Name for the next product:";
+   cin>>cname;
+   cout<<"Enter Unit-Price for the next product:";
+   cin>>uprice;
+   cout<<"Enter Quantity for the next product:";
+   cin>>quantity;
+   cout<<"Enter discount for the next product:";
+   cin>>discount;
+
+   file<<pname<<"	  "<<cname<<"		  "<<uprice<<"		 "<<quantity<<"      "<<discount<<endl;
+   file.close();
+
+   cout<<"Product has been successfully added"<<endl;
+
+   cout<<"======================================================================\n"<<endl;
+
+   cout<<"Do you want to add another product?([Yes] or [No]):";
+
+   YesOrNoCheck();
 }
 
 void Admin::EditFood() {
-    // Implementation of EditFood
+   display();
+    cout << "-------------------------- EDIT FOOD --------------------------\n" << endl;
+    cout << "===============================================================\n" << endl;
+
+    ifstream inputFile("products.txt");
+    ofstream tempFile("temp_products.txt");
+
+    if (!inputFile || !tempFile) {
+        cout << "Error opening file." << endl;
+        return;
+    }
+
+    int prodNumber = 1;
+    string line;
+    string itemToModify;
+    int newQuantity, newDiscount;
+    string newPrice;
+
+    cout << setw(7) << "PROD.NO" << setw(24) << "Product Name" << setw(19) << "Company"
+         << setw(14) << "Unit Price" << setw(12) << "Quantity" << setw(12) << "Discount" << endl;
+
+    while (getline(inputFile, line)) {
+        stringstream ss(line);
+        string pname, cname, uprice, quantity, discount;
+
+        ss >> pname >> cname >> uprice >> quantity >> discount;
+
+        cout << setw(7) << prodNumber << "  " << setw(20) << pname << "  " << setw(20) << cname
+             << "  " << setw(10) << uprice << "  " << setw(10) << quantity << "  "
+             << setw(10) << discount<<endl;
+        prodNumber++;
+    }
+
+    inputFile.close();
+
+    cout<<"Enter the product number you want to modify: ";
+    cin>>itemToModify;
+
+    cout<<"Enter the new quantity: ";
+    cin>>newQuantity;
+
+    cout<<"Enter the new price: ";
+    cin>>newPrice;
+
+    cout<<"Enter the new discount: ";
+    cin>>newDiscount;
+
+    inputFile.open("products.txt");
+
+    prodNumber = 1;
+
+    while (getline(inputFile, line)) {
+        stringstream ss(line);
+        string pname, cname, uprice, quantity, discount;
+
+        ss >> pname >> cname >> uprice >> quantity >> discount;
+
+        if (prodNumber != stoi(itemToModify)) {
+            tempFile<<setw(20)<<left<<pname<<"  "<<setw(20)<<left<<cname<<"  "
+                    <<setw(10)<<left<<uprice<<"  "<<setw(10)<<left<<quantity<<"  "
+                    <<setw(10)<<left<<discount<<endl;
+        } else {
+            tempFile<<setw(20)<<left<<pname<<"  "<<setw(20)<<left<<cname<<"  "
+                    <<setw(10)<<left<<newPrice<<"  "<<setw(10)<<left<<newQuantity
+                    <<"  "<<setw(10)<<left<<newDiscount<<endl;
+        }
+
+        prodNumber++;
+    }
+
+    inputFile.close();
+    tempFile.close();
+
+    remove("products.txt");
+    rename("temp_products.txt", "products.txt");
+
+    cout<<"Quantity, price and discount modified successfully."<<endl;
+
+
+       cout << "1. Go to Admin Page\n" <<endl;
+       cout << "2. Go to Login Page\n" <<endl;
+       cout << "3. Go to Welcome Page\n" <<endl;
+
+       cout << "***************************************************************\n" <<endl;
+       cout << "Please select your option(1-3)" <<endl;
+
+       int c;
+
+       cin>>c;
+
+       cout<<endl;
+
+       switch(c)
+       {
+        case 1:
+              system("cls");
+              AdminPage();
+              break;
+
+        case 2:
+              system("cls");
+              login();
+              break;
+
+        case 3:
+              system("cls");
+              main();
+              break;
+
+        default:
+                system("cls");
+                cout<<"Wrong input"<<endl;
+              }
+
 }
 
 void Admin::DeleteFood() {
-    // Implementation of DeleteFood
+
+     string pname2;
+
+    display();
+    cout << "----------------------------- DELETE FOOD -----------------------------\n" << endl;
+    cout << "=======================================================================\n" << endl;
+
+    ifstream inputFile("products.txt");
+    ofstream tempFile("tempo_products.txt");
+
+    if (!inputFile || !tempFile) {
+        cout << "Error opening file." << endl;
+        return;
+    }
+
+    int prodNumber = 1;
+    string line;
+    string itemTodelete;
+
+    cout << setw(7) << "PROD.NO" << setw(24) << "Product Name" << setw(19) << "Company"
+         << setw(14) << "Unit Price" << setw(12) << "Quantity" << setw(12) << "Discount" << endl;
+    while (getline(inputFile, line)) {
+        stringstream ss(line);
+        string pname, cname, uprice, quantity, discount;
+
+        ss >> pname >> cname >> uprice >> quantity >> discount;
+
+        cout << setw(7) << prodNumber << "  " << setw(20) << pname << "  " << setw(20) << cname
+             << "  " << setw(10) << uprice << "  " << setw(10) << quantity << "  " << setw(10) << discount << endl;
+        prodNumber++;
+    }
+
+    inputFile.close();
+
+    cout<<"Enter the Product No to delete:";
+    cin>>itemTodelete;
+    inputFile.open("products.txt");
+    prodNumber = 1;
+
+    while (getline(inputFile, line)) {
+        stringstream ss(line);
+        string pname, cname, uprice, quantity, discount;
+
+        ss >> pname >> cname >> uprice >> quantity >> discount;
+
+        if (prodNumber != stoi(itemTodelete)) {
+            tempFile << setw(20) << left << pname << "  " << setw(20) << left << cname << "  "
+                     << setw(10) << left << uprice << "  " << setw(10) << left << quantity << "  "
+                     << setw(10) << left << discount << endl;
+        }
+
+        prodNumber++;
+    }
+
+    inputFile.close();
+    tempFile.close();
+
+    if(remove("products.txt")!=0)
+    {
+        cout<<"\n\tFile does not exist";
+    }
+
+    if(rename("tempo_products.txt","products.txt")!=0)
+    {
+        cout<<"\n\tFile can not be renamed.";
+    }
+
+    cout << "\n\tProduct deleted successfully." << endl;
+
+
+       cout << "1. Go to Admin Page\n" <<endl;
+       cout << "2. Go to Login Page\n" <<endl;
+       cout << "3. Go to Welcome Page\n" <<endl;
+
+       cout << "***************************************************************\n" <<endl;
+       cout << "Please select your option(1-3)" <<endl;
+
+       int c;
+
+       cin>>c;
+       cout<<endl;
+
+       switch(c)
+       {
+        case 1:
+              system("cls");
+              AdminPage();
+              break;
+
+        case 2:
+              system("cls");
+              login();
+              break;
+
+        case 3:
+              system("cls");
+              main();
+              break;
+
+        default:
+                system("cls");
+                cout<<"Wrong input"<<endl;
+              }
+
 }
 
 void Admin::Inventory() {
-    // Implementation of Inventory
+    display();
+    cout << "----------------------------- ADMIN -----------------------------\n" << endl;
+    cout << "=================================================================\n" << endl;
+
+    ifstream file("products.txt");
+
+    if (!file) {
+        cout << "Error opening file." << endl;
+        return;
+    }
+
+    string line;
+    int prodNumber = 1;
+
+    cout << setw(7) << "PROD.NO" << setw(24) << "Product Name" << setw(19) << "Company"
+         << setw(14) << "Unit Price" << setw(12) << "Quantity" << setw(12) << "Discount" << endl;
+
+
+    while (getline(file, line)) {
+        stringstream ss(line);
+        string pname, cname, uprice, quantity, discount;
+
+
+        ss >> pname >> cname >> uprice >> quantity >> discount;
+
+
+        cout << setw(7) << prodNumber << "  " << setw(20) << pname << "  " << setw(20) << cname
+             << "  " << setw(10) << uprice << "  " << setw(10) << quantity << "  " << setw(10) << discount << endl;
+        prodNumber++;
+    }
+
+    file.close();
+
+       cout << "1. Go to Admin Page\n" <<endl;
+       cout << "2. Go to Login Page\n" <<endl;
+       cout << "3. Go to Welcome Page\n" <<endl;
+
+       cout << "***************************************************************\n" <<endl;
+       cout << "Please select your option(1-3)" <<endl;
+
+       int c;
+
+       cin>>c;
+
+       cout<<endl;
+
+       switch(c)
+       {
+        case 1:
+              system("cls");
+              AdminPage();
+              break;
+
+        case 2:
+              system("cls");
+              login();
+              break;
+
+        case 3:
+              system("cls");
+              main();
+              break;
+
+        default:
+                system("cls");
+                cout<<"Wrong input"<<endl;
+              }
 }
 
 void Admin::ShowAllFoodItems() {

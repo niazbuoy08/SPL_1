@@ -29,6 +29,7 @@ public:
     void loginAsAdmin();
     void loginAsCustomer();
     void loginAsSalesperson();
+    void YesOrNoCheck();
 
 private:
     std::string username;
