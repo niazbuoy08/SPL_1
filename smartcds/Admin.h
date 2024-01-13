@@ -28,6 +28,7 @@ public:
     void main();
     void loginAsAdmin();
     void loginAsCustomer();
+    void loginAsSalesperson();
 
 private:
     std::string username;

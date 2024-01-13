@@ -8,12 +8,7 @@
 
 class SmartCDS {
 public:
-    void run();
-    void displayWelcome() const;
-    void registerUser();
-    void loginUser();
 
-private:
     std::string getPassword() const;
     void display() const;
     void registerAsAdmin();
@@ -21,6 +16,15 @@ private:
     void loginAsAdmin();
     void loginAsCustomer();
     void AdminPage();
+    void run();
+    void displayWelcome() const;
+    void registerUser();
+    void loginUser();
+    void AddSalesperson();
+    void loginAsSalesperson();
+
+private:
+
 };
 
 #endif

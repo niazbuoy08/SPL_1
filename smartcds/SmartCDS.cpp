@@ -97,14 +97,16 @@ void SmartCDS::registerUser() {
 void SmartCDS::loginUser() {
     int option;
     display();
+
     std::cout << "-------------------------- LOGIN --------------------------\n" << std::endl;
     std::cout << "===========================================================\n" << std::endl;
     std::cout << "1. As an ADMIN\n" << std::endl;
     std::cout << "2. As a CUSTOMER\n" << std::endl;
-    std::cout << "3. Return to Welcome Page\n" << std::endl;
-    std::cout << "4. EXIT\n" << std::endl;
+    std::cout << "3. As a SALESPERSON\n" << std::endl;
+    std::cout << "4. Return to Welcome Page\n" << std::endl;
+    std::cout << "5. EXIT\n" << std::endl;
     std::cout << "***************************************************************\n" << std::endl;
-    std::cout << "Please select your option(1-4)" << std::endl;
+    std::cout << "Please select your option(1-5)" << std::endl;
 
     std::cin >> option;
     std::cout << std::endl;
@@ -122,10 +124,15 @@ void SmartCDS::loginUser() {
 
     case 3:
         system("cls");
-        run();
+        loginAsSalesperson();
         break;
 
     case 4:
+        system("cls");
+        run();
+        break;
+
+    case 5:
         system("cls");
         std::cout << "Exiting the program\n" << std::endl;
         break;
@@ -170,8 +177,6 @@ void SmartCDS::registerAsAdmin() {
 void SmartCDS::loginAsAdmin() {
 
     Admin admin;
-    admin.AdminPage();
-
 
     int count = 0;
     std::string userID, password, id, pass;
@@ -201,11 +206,12 @@ void SmartCDS::loginAsAdmin() {
         std::cout << userID << " your login is successful\n Thanks for logging in \n";
         Admin admin(userID, password, "", "", "");
         admin.displayProfile();
-        AdminPage();
+        admin.AdminPage();
     } else {
         std::cout << "LOGIN ERROR\n Please check username and password \n";
         return;
     }
+
 }
 void SmartCDS::registerAsCustomer() {
     std::string username, password, fname, lname, mobile;
@@ -233,6 +239,7 @@ void SmartCDS::registerAsCustomer() {
 }
 
 void SmartCDS::loginAsCustomer() {
+
     int count = 0;
     std::string userID, password, id, pass, customerId;
 
@@ -262,13 +269,84 @@ void SmartCDS::loginAsCustomer() {
         std::cout << userID << " your login is successful\n Thanks for logging in \n";
         Customer customer(userID, password, "", "", "", customerId);
         customer.displayProfile();
-        // Call CustomerPage() or any other functionality here
+        customer.CustomerPage();
     } else {
         std::cout << "LOGIN ERROR\n Please check username and password \n";
         return;
     }
 }
 
+void SmartCDS::AddSalesperson() {
+    display();
+    std::cout << "--------------------------- REGISTER--------------------------\n" << std::endl;
+    std::cout << "===============================================================\n" << std::endl;
+
+    std::string username, password, fname, lname, mobile;
+
+    std::cout << "Enter a username: ";
+    std::cin >> username;
+
+    std::cout << "Enter a password: ";
+    std::cin >> password;
+
+    std::cout << "Enter your First Name: ";
+    std::cin >> fname;
+
+    std::cout << "Enter your Last Name: ";
+    std::cin >> lname;
+
+    std::cout << "Enter Mobile Number: ";
+    std::cin >> mobile;
+
+    std::ofstream file("salesperson_registration.txt", std::ios::app);
+
+    if (!file) {
+        std::cerr << "Error opening the file!" << std::endl;
+        return;
+    }
+
+    file << username << " " << password << " " << fname << " " << lname << " " << mobile << std::endl;
+    file.close();
+
+    std::cout << "Registration successful!" << std::endl;
+}
+
+void SmartCDS::loginAsSalesperson() {
+    int count = 0;
+    std::string userID, password, id, pass;
+
+    std::cout << "\t\t\t Please enter your username and password" << std::endl;
+
+    std::cout << "USERNAME: ";
+    std::cin >> userID;
+
+    std::cout << "PASSWORD: ";
+    password = getPassword(); // Assuming you have a method to hide the password input
+
+    std::string data;
+    FileManager::readFromFile("salesperson_registration.txt", data);
+    std::stringstream stream(data);
+
+    while (stream >> id >> pass) {
+        std::string restOfLine;
+        getline(stream, restOfLine);
+        if (id == userID && pass == password) {
+            count = 1;
+            system("cls");
+        }
+    }
+
+    if (count == 1) {
+        std::cout << userID << " your login is successful\n Thanks for logging in \n";
+        // Perform actions for a successful login, e.g., call SalespersonPage()
+        SalesPerson salesperson(userID, password, "", "", "");
+        salesperson.displayProfile();
+        salesperson.SalesPersonPage();
+    } else {
+        std::cout << "LOGIN ERROR\n Please check username and password \n";
+        return;
+    }
+}
 
 
 std::string SmartCDS::getPassword() const {

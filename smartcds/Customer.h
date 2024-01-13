@@ -13,6 +13,15 @@ public:
 
     void displayProfile() const override;
     void generateCustomerID(std::string& customerId);
+
+    void display();
+    void CustomerPage();
+    void UpdateProfile();
+    void UpdateName();
+    void UpdateMobileNumber();
+    void ChangePassword();
+    void login();
+    void main();
 };
 
 #endif

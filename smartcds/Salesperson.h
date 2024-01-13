@@ -3,12 +3,17 @@
 
 #include "User.h"
 
-class Salesperson : public User {
+class SalesPerson : public User {
 public:
-    Salesperson(const std::string& username, const std::string& password, const std::string& firstName,
+    SalesPerson(const std::string& username, const std::string& password, const std::string& firstName,
                 const std::string& lastName, const std::string& mobileNumber);
 
     void displayProfile() const override;
+    void SalesPersonPage();
+    void PlaceOrder();
+    void registerAsCustomer();
+    void login();
+    void main();
 };
 
 #endif

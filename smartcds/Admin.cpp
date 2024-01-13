@@ -117,20 +117,25 @@ void Admin::ShowAllFoodItems() {
 }
 
 void Admin::AddSalesperson() {
-    // Implementation of AddSalesperson
+    SmartCDS smartCDS;
+    smartCDS.AddSalesperson();
 }
 
 void Admin::login() {
     int option;
     display();
+
+    SmartCDS smartCDS;
+
     std::cout << "-------------------------- LOGIN --------------------------\n" << std::endl;
     std::cout << "===========================================================\n" << std::endl;
     std::cout << "1. As an ADMIN\n" << std::endl;
     std::cout << "2. As a CUSTOMER\n" << std::endl;
-    std::cout << "3. Return to Welcome Page\n" << std::endl;
-    std::cout << "4. EXIT\n" << std::endl;
+    std::cout << "3. As a SALESPERSON\n" << std::endl;
+    std::cout << "4. Return to Welcome Page\n" << std::endl;
+    std::cout << "5. EXIT\n" << std::endl;
     std::cout << "***************************************************************\n" << std::endl;
-    std::cout << "Please select your option(1-4)" << std::endl;
+    std::cout << "Please select your option(1-5)" << std::endl;
 
     std::cin >> option;
     std::cout << std::endl;
@@ -138,20 +143,25 @@ void Admin::login() {
     switch (option) {
     case 1:
         system("cls");
-        //loginAsAdmin();
+        smartCDS.loginAsAdmin();
         break;
 
     case 2:
         system("cls");
-        //loginAsCustomer();
+        smartCDS.loginAsCustomer();
         break;
 
     case 3:
         system("cls");
-        //run();
+        smartCDS.loginAsSalesperson();
         break;
 
     case 4:
+        system("cls");
+        smartCDS.run();
+        break;
+
+    case 5:
         system("cls");
         std::cout << "Exiting the program\n" << std::endl;
         break;
@@ -162,8 +172,10 @@ void Admin::login() {
     }
 }
 
-
 void Admin::main() {
-    // Implementation of main
+
+    SmartCDS smartCDS;
+    smartCDS.run();
+
 }
 
