@@ -128,11 +128,15 @@
 	"SmartCDS.h"
 	<iostream>
 
-1705157213 source:c:\users\user\onedrive\desktop\spl\spl_1\smartcds\customer.cpp
+1705221959 source:c:\users\user\onedrive\desktop\spl\spl_1\smartcds\customer.cpp
 	"Customer.h"
 	"SmartCDS.h"
 	"FileManager.h"
 	<iostream>
+	<fstream>
+	<iomanip>
+	<sstream>
+	<string>
 
 1705157213 c:\users\user\onedrive\desktop\spl\spl_1\smartcds\customer.h
 	"User.h"
