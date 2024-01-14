@@ -2,7 +2,7 @@
 #define CUSTOMER_H
 
 #include "User.h"
-
+#include "SmartCDS.h"
 class Customer : public User {
 private:
     std::string customerId;
@@ -12,7 +12,7 @@ public:
              const std::string& lastName, const std::string& mobileNumber, const std::string& customerId);
 
     void displayProfile() const override;
-    void generateCustomerID(std::string& customerId);
+
 
     void display();
     void CustomerPage();

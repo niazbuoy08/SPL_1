@@ -1,6 +1,7 @@
 #include "Customer.h"
 #include "SmartCDS.h"
 #include "FileManager.h"
+#include "User.h"
 #include <iostream>
 #include <fstream>
 #include <iomanip>
@@ -152,7 +153,7 @@ void Customer::UpdateName() {
     string line;
 
     bool found = false;
-
+    string customerId;
     while (getline(inputFile, line)) {
         stringstream ss(line);
         string cusername, cpassword, cfname, clname, cmobile, customerId;
@@ -223,7 +224,7 @@ void Customer::UpdateMobileNumber() {
     string line;
 
     bool found = false;
-
+    string customerId;
     while (getline(inputFile, line)) {
         stringstream ss(line);
         string cusername, cpassword, cfname, clname, cmobile,customerId;
@@ -296,11 +297,12 @@ void Customer::ChangePassword() {
     string line;
 
     bool found = false;
+    string customerId;
 
     while (getline(inputFile, line))
     {
         stringstream ss(line);
-        string cusername, cpassword, cfname, clname, cmobile;
+        string cusername, cpassword, cfname, clname, cmobile,customerId;
 
         ss >> cusername >> cpassword >> cfname >> clname >> cmobile>>customerId;
 

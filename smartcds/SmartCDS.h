@@ -22,7 +22,7 @@ public:
     void loginUser();
     void AddSalesperson();
     void loginAsSalesperson();
-
+    void generateCustomerID(std::string& customerId);
 private:
 
 };

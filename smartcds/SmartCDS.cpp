@@ -8,7 +8,7 @@
 #include <cstdlib>
 #include <sstream>
 #include <conio.h>
-
+#include <string>
 
 void SmartCDS::run() {
     srand(static_cast<unsigned>(time(0)));
@@ -213,8 +213,46 @@ void SmartCDS::loginAsAdmin() {
     }
 
 }
+void SmartCDS::generateCustomerID(std::string& customerId)
+   {
+       const int maxAttempts=1000;
+       int attempt=0;
+
+       do
+       {
+         const int randomPart=rand()%1000;
+         customerId=std::to_string(randomPart);
+         std::ifstream file("customer_registration.txt");
+         std::string line;
+
+         bool idExists=false;
+         while(getline(file,line))
+         {
+             if(line.find(customerId)!=std::string::npos)
+             {
+                 idExists=true;
+                 break;
+             }
+         }
+         file.close();
+
+         if(!idExists)
+         {
+             break;
+         }
+         attempt++;
+
+       }while(attempt<maxAttempts);
+
+        if(attempt==maxAttempts)
+        {
+               std::cerr<<"Error:Unable to generate Customer ID"<<std::endl;
+               exit(1);
+        }
+   }
+
 void SmartCDS::registerAsCustomer() {
-    std::string username, password, fname, lname, mobile;
+    std::string username, password, fname, lname, mobile,customerId;
 
     std::cout << "Enter a username: ";
     std::cin >> username;
@@ -230,17 +268,17 @@ void SmartCDS::registerAsCustomer() {
 
     std::cout << "Enter Mobile Number: ";
     std::cin >> mobile;
-
-    std::string userData = username + " " + password + " " + fname + " " + lname + " " + mobile + " " ;
+    generateCustomerID(customerId);
+    std::string userData = " "+username + " " + password + " " + fname + " " + lname + " " + mobile + " "+customerId ;
     FileManager::writeToFile("customer_registration.txt", userData);
 
-    std::cout << "Registration successful!" << std::endl;
+    std::cout << "Registration successful!Your Customer ID is: " <<customerId<< std::endl;
 
 }
 
 void SmartCDS::loginAsCustomer() {
 
-    int count = 0;
+     int count = 0;
     std::string userID, password, id, pass, customerId;
 
     std::cout << "\t\t\t Please enter your username and password" << std::endl;
@@ -274,7 +312,8 @@ void SmartCDS::loginAsCustomer() {
         std::cout << "LOGIN ERROR\n Please check username and password \n";
         return;
     }
-}
+   }
+
 
 void SmartCDS::AddSalesperson() {
     display();
