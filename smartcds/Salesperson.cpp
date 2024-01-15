@@ -1,7 +1,11 @@
 #include "SalesPerson.h"
 #include "SmartCDS.h" // Include the main header file where 'main' and other functions are declared
-
+#include <fstream>
+#include <string>
+#include <ctime>
 #include <iostream>
+
+using namespace std;
 
 SalesPerson::SalesPerson(const std::string& username, const std::string& password, const std::string& firstName,
                          const std::string& lastName, const std::string& mobileNumber)
@@ -63,13 +67,112 @@ void SalesPerson::SalesPersonPage() {
     }
 }
 
-void SalesPerson::PlaceOrder() {
-    // Implementation of placing an order
+void SalesPerson::EditOrder() {
+
+    SmartCDS smartCDS;
+
+    smartCDS.display();
+    cout << "--------------------------------- EDIT ORDER -----------------------------\n" << endl;
+    cout << "============================================================================\n" << endl;
+
+    // Assuming you want to edit the quantity
+    cout << "Current Ordered Quantity: " << OrderedQuantity << endl;
+    cout << "Enter the new Ordered Quantity: ";
+    cin >> OrderedQuantity;
+
+    cout << "Order edited successfully!" << endl;
+
+
+
+    system("pause");
+    system("cls");
+    SalesPersonPage();
 }
 
+void SalesPerson::PlaceOrder() {
+    SmartCDS smartCDS;
+
+    smartCDS.display();
+    cout << "--------------------------------- PLACE ORDER -----------------------------\n" << endl;
+    cout << "============================================================================\n" << endl;
+
+    cout << "Enter the Product Name: ";
+    cin.ignore();
+    getline(cin, OrderedProduct);
+
+    cout << "Enter the OrderedQuantity: ";
+    cin >> OrderedQuantity;
+
+    cout << "Enter the Price per item: ";
+    cin >> OrderedPrice;
+
+    cout << "1. Edit Order\n";
+    cout << "2. Confirm Order\n";
+
+    int choice;
+
+    cin >> choice;
+
+    if (choice == 1) {
+        system("cls");
+        cout << "Editing order...\n";
+        PlaceOrder();  // Recursive call
+    } else if (choice == 2) {
+        system("cls");
+        cout << "Confirming order...\n";
+        GenerateInvoice(OrderedProduct, OrderedQuantity, OrderedPrice);
+    } else {
+        cout << "Invalid choice.\n";
+    }
+}
+
+void SalesPerson::GenerateInvoice(const string& OrderedProduct, int OrderedQuantity, double OrderedPrice){
+
+     time_t now = time(0);
+    char* dt = ctime(&now);
+
+    ofstream invoiceFile("invoice.txt");
+
+    if (!invoiceFile) {
+        cout << "Error opening file." << endl;
+        return;
+    }
+
+    string invoice;
+    invoice += "\n\n";
+    invoice += "=============================================================================\n";
+    invoice += "============================== INVOICE =====================================\n";
+    invoice += "=============================================================================\n";
+    invoice += "\n";
+    invoice += "Invoice Date: " + string(dt) + "\n";
+    invoice += "Product Name: " + OrderedProduct + "\n";
+    invoice += "Quantity: " + to_string(OrderedQuantity) + "\n";
+    invoice += "Price per item: " + to_string(OrderedPrice) + "\n";
+    invoice += "Total: " + to_string(OrderedPrice * OrderedQuantity) + "\n";
+    invoice += "\n";
+    invoice += "=============================================================================\n";
+    invoice += "Invoice generated successfully!\n";
+    invoice += "Product removed from inventory.\n";
+    invoice += "=============================================================================\n";
+    invoice += "\n\n";
+
+    cout << invoice; // Print the invoice to the console
+    invoiceFile << invoice; // Write the invoice to the file
+
+    invoiceFile.close(); // Close the invoice file
+
+    cout << "Invoice generated and saved to invoice.txt successfully!" << endl;
+
+    system("pause");
+    system("cls");
+    SalesPersonPage();
+
+
+
+};
+
 void SalesPerson::registerAsCustomer() {
-    // Implementation of registering as a customer
-    // You may reuse the code from the AddSalesperson() function in the Admin class
+
 }
 
 void SalesPerson::login() {
