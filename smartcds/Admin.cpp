@@ -156,6 +156,57 @@ void Admin::AddNewFood() {
 
    YesOrNoCheck();
 }
+void Admin::UpdateInventory(const std::string& productName, int quantity) {
+    // Read existing inventory from file
+    std::ifstream inputFile("products.txt");
+    std::ofstream tempFile("temp_products.txt");
+
+    if (!inputFile || !tempFile) {
+        std::cerr << "Error opening file." << std::endl;
+        return;
+    }
+
+    std::string line;
+
+    while (getline(inputFile, line)) {
+        std::stringstream ss(line);
+        std::string pname, cname, uprice, oldQuantity, discount;
+
+        ss >> pname >> cname >> uprice >> oldQuantity >> discount;
+
+        // Check if the current line contains the product to update
+        if (pname == productName) {
+            // Update the quantity
+            int updatedQuantity = std::stoi(oldQuantity) - quantity;
+            if (updatedQuantity < 0) {
+                std::cerr << "Error: Insufficient quantity in inventory." << std::endl;
+                inputFile.close();
+                tempFile.close();
+                return;
+            }
+
+            // Write the updated line to the temporary file
+            tempFile << pname << "  " << cname << "  " << uprice << "  " << updatedQuantity << "  " << discount << std::endl;
+        } else {
+            // Write the unchanged line to the temporary file
+            tempFile << pname << "  " << cname << "  " << uprice << "  " << oldQuantity << "  " << discount << std::endl;
+        }
+    }
+
+    inputFile.close();
+    tempFile.close();
+
+    // Replace the original file with the temporary file
+    if (remove("products.txt") != 0) {
+        std::cerr << "\n\tError: File does not exist." << std::endl;
+    }
+
+    if (rename("temp_products.txt", "products.txt") != 0) {
+        std::cerr << "\n\tError: File cannot be renamed." << std::endl;
+    }
+
+    std::cout << "\n\tInventory updated successfully." << std::endl;
+}
 
 void Admin::EditFood() {
    display();

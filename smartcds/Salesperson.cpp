@@ -4,6 +4,7 @@
 #include <string>
 #include <ctime>
 #include <iostream>
+#include"Admin.h"
 
 using namespace std;
 
@@ -156,8 +157,12 @@ void SalesPerson::GenerateInvoice(const string& OrderedProduct, int OrderedQuant
     invoice += "=============================================================================\n";
     invoice += "\n\n";
 
-    cout << invoice; // Print the invoice to the console
-    invoiceFile << invoice; // Write the invoice to the file
+    cout << invoice;
+    invoiceFile << invoice;
+
+    Admin adminInstance;
+
+    adminInstance.UpdateInventory(OrderedProduct, OrderedQuantity);
 
     invoiceFile.close(); // Close the invoice file
 

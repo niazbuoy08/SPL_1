@@ -30,6 +30,8 @@ public:
     void loginAsCustomer();
     void loginAsSalesperson();
     void YesOrNoCheck();
+    void UpdateInventory(const std::string& productName, int quantity);
+
 
 private:
     std::string username;
