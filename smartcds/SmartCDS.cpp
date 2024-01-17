@@ -171,7 +171,11 @@ void SmartCDS::registerAsAdmin() {
     std::string userData = username + " " + password + " " + fname + " " + lname + " " + mobile;
     FileManager::writeToFile("admin_registration.txt", userData);
 
+    system("cls");
+
     std::cout << "Registration successful!" << std::endl;
+
+    loginUser();
 }
 
 void SmartCDS::loginAsAdmin() {
@@ -272,7 +276,11 @@ void SmartCDS::registerAsCustomer() {
     std::string userData = " "+username + " " + password + " " + fname + " " + lname + " " + mobile + " "+customerId ;
     FileManager::writeToFile("customer_registration.txt", userData);
 
+    system("cls");
+
     std::cout << "Registration successful!Your Customer ID is: " <<customerId<< std::endl;
+
+    loginUser();
 
 }
 
@@ -347,7 +355,11 @@ void SmartCDS::AddSalesperson() {
     file << username << " " << password << " " << fname << " " << lname << " " << mobile << std::endl;
     file.close();
 
+    system("cls");
+
     std::cout << "Registration successful!" << std::endl;
+
+    loginUser();
 }
 
 void SmartCDS::loginAsSalesperson() {
