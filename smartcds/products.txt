@@ -1,2 +1,2 @@
-chips  Pran  20  15  0
-chocolate  cadbury  100  30  0
+chips  Pran  20  2  0
+chocolate  cadbury  100  27  0

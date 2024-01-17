@@ -95,7 +95,7 @@ void SalesPerson::PlaceOrder() {
     cin.ignore();
     getline(cin, OrderedProduct);
 
-    cout << "Enter the OrderedQuantity: ";
+    cout << "Enter the Ordered Quantity: ";
     cin >> OrderedQuantity;
 
     cout << "Enter the Price per item: ";
@@ -105,7 +105,6 @@ void SalesPerson::PlaceOrder() {
     cout << "2. Confirm Order\n";
 
     int choice;
-
     cin >> choice;
 
     if (choice == 1) {
@@ -115,16 +114,22 @@ void SalesPerson::PlaceOrder() {
     } else if (choice == 2) {
         system("cls");
         cout << "Confirming order...\n";
+
+        // Call the function to generate invoice
         GenerateInvoice(OrderedProduct, OrderedQuantity, OrderedPrice);
+
+        // Call the function to store information in purchase history
+        StorePurchaseHistory(OrderedProduct, OrderedQuantity, OrderedPrice);
     } else {
         cout << "Invalid choice.\n";
     }
 }
-
 void SalesPerson::GenerateInvoice(const string& OrderedProduct, int OrderedQuantity, double OrderedPrice){
 
      time_t now = time(0);
     char* dt = ctime(&now);
+
+
 
     ofstream invoiceFile("invoice.txt");
 
@@ -169,6 +174,31 @@ void SalesPerson::GenerateInvoice(const string& OrderedProduct, int OrderedQuant
 
 
 };
+
+
+void SalesPerson::StorePurchaseHistory(const string& OrderedProduct, int OrderedQuantity, double OrderedPrice) {
+    time_t now = time(0);
+    char* dt = ctime(&now);
+
+    ofstream purchaseHistoryFile("purchase_history.txt", ios::app);
+
+    if (!purchaseHistoryFile) {
+        cerr << "Error opening purchase history file." << endl;
+        return;
+    }
+
+    purchaseHistoryFile << "----------------------------- PURCHASE HISTORY -----------------------------\n";
+    purchaseHistoryFile << "Invoice Date: " << dt;
+    purchaseHistoryFile << "Product Name: " << OrderedProduct << "\n";
+    purchaseHistoryFile << "Quantity: " << OrderedQuantity << "\n";
+    purchaseHistoryFile << "Price per item: " << OrderedPrice << "\n";
+    purchaseHistoryFile << "Total: " << (OrderedPrice * OrderedQuantity) << "\n";
+    purchaseHistoryFile << "---------------------------------------------------------------\n\n";
+
+    purchaseHistoryFile.close();
+
+
+}
 
 
 void SalesPerson::login() {

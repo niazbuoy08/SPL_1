@@ -22,6 +22,7 @@ public:
     void EditOrder();
     void GenerateInvoice(const std::string& OrderedProduct, int OrderedQuantity, double OrderedPrice);
     void registerAsCustomer();
+    void StorePurchaseHistory(const std::string& OrderedProduct, int OrderedQuantity, double OrderedPrice);
 
     void login();
     void main();

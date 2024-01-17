@@ -20,6 +20,7 @@ public:
     void UpdateName();
     void UpdateMobileNumber();
     void ChangePassword();
+    void displayPurchaseHistory();
     void login();
     void main();
 };

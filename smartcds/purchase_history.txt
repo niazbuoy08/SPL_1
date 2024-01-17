@@ -1,0 +1,24 @@
+----------------------------- PURCHASE HISTORY -----------------------------
+Invoice Date: Thu Jan 18 04:11:56 2024
+Product Name: chips
+Quantity: 3
+Price per item: 20
+Total: 60
+---------------------------------------------------------------
+
+----------------------------- PURCHASE HISTORY -----------------------------
+Invoice Date: Thu Jan 18 04:14:28 2024
+Product Name: chips
+Quantity: 3
+Price per item: 20
+Total: 60
+---------------------------------------------------------------
+
+----------------------------- PURCHASE HISTORY -----------------------------
+Invoice Date: Thu Jan 18 04:17:21 2024
+Product Name: chocolate
+Quantity: 3
+Price per item: 100
+Total: 300
+---------------------------------------------------------------
+

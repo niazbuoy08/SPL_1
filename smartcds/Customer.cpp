@@ -44,7 +44,7 @@ void Customer::CustomerPage() {
     switch (c) {
     case 1:
         system("cls");
-        // Implement Purchase History
+        displayPurchaseHistory();
         break;
 
     case 2:
@@ -76,6 +76,23 @@ void Customer::CustomerPage() {
         system("cls");
         std::cout << "Wrong input" << std::endl;
     }
+}
+void Customer::displayPurchaseHistory() {
+    ifstream purchaseHistoryFile("purchase_history.txt");
+
+    if (!purchaseHistoryFile) {
+        cout << "No purchase history available." << endl;
+        return;
+    }
+
+
+
+    string line;
+    while (getline(purchaseHistoryFile, line)) {
+        cout << line << endl;
+    }
+
+    purchaseHistoryFile.close();
 }
 
 void Customer::UpdateProfile() {
