@@ -28,14 +28,13 @@ void Admin::AdminPage() {
     std::cout << "2. Edit Food\n" << std::endl;
     std::cout << "3. Delete Food\n" << std::endl;
     std::cout << "4. Inventory\n" << std::endl;
-    std::cout << "5. Show All food items\n" << std::endl;
-    std::cout << "6. Add Salesperson\n" << std::endl;
-    std::cout << "7. Go to Login Page\n" << std::endl;
-    std::cout << "8. Go to Welcome Page\n" << std::endl;
-    std::cout << "9. Exit\n" << std::endl;
+    std::cout << "5. Add Salesperson\n" << std::endl;
+    std::cout << "6. Go to Login Page\n" << std::endl;
+    std::cout << "7. Go to Welcome Page\n" << std::endl;
+    std::cout << "8. Exit\n" << std::endl;
 
     std::cout << "***************************************************************\n" << std::endl;
-    std::cout << "Please select your option(1-9)" << std::endl;
+    std::cout << "Please select your option(1-8)" << std::endl;
     std::cin >> c;
     std::cout << std::endl;
 
@@ -63,25 +62,20 @@ void Admin::AdminPage() {
 
         case 5:
               system("cls");
-              ShowAllFoodItems();
+              AddSalesperson();
               break;
 
         case 6:
               system("cls");
-              AddSalesperson();
+              login();
               break;
 
         case 7:
               system("cls");
-              login();
-              break;
-
-        case 8:
-              system("cls");
               main();
               break;
 
-        case 9:
+        case 8:
             system("cls");
             std::cout << "Exiting the program\n" << std::endl;
             break;
@@ -500,10 +494,6 @@ void Admin::Inventory() {
                 system("cls");
                 cout<<"Wrong input"<<endl;
               }
-}
-
-void Admin::ShowAllFoodItems() {
-    // Implementation of ShowAllFoodItems
 }
 
 void Admin::AddSalesperson() {

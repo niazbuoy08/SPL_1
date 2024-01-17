@@ -22,7 +22,6 @@ public:
     void EditFood();
     void DeleteFood();
     void Inventory();
-    void ShowAllFoodItems();
     void AddSalesperson();
     void login();
     void main();

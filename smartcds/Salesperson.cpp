@@ -26,13 +26,12 @@ void SalesPerson::SalesPersonPage() {
     int c;
 
     std::cout << "1. Place Order\n" << std::endl;
-    std::cout << "2. Add New Customer\n" << std::endl;
-    std::cout << "3. Go to Login Page\n" << std::endl;
-    std::cout << "4. Go to Welcome Page\n" << std::endl;
-    std::cout << "5. Exit\n" << std::endl;
+    std::cout << "2. Go to Login Page\n" << std::endl;
+    std::cout << "3. Go to Welcome Page\n" << std::endl;
+    std::cout << "4. Exit\n" << std::endl;
 
     std::cout << "**********************************************************************\n" << std::endl;
-    std::cout << "Please select your option(1-5)" << std::endl;
+    std::cout << "Please select your option(1-4)" << std::endl;
     std::cin >> c;
     std::cout << std::endl;
 
@@ -44,20 +43,15 @@ void SalesPerson::SalesPersonPage() {
 
     case 2:
         system("cls");
-        registerAsCustomer();
+        login();
         break;
 
     case 3:
         system("cls");
-        login();
-        break;
-
-    case 4:
-        system("cls");
         main();
         break;
 
-    case 5:
+    case 4:
         system("cls");
         std::cout << "Exiting the program\n" << std::endl;
         break;
@@ -176,9 +170,6 @@ void SalesPerson::GenerateInvoice(const string& OrderedProduct, int OrderedQuant
 
 };
 
-void SalesPerson::registerAsCustomer() {
-
-}
 
 void SalesPerson::login() {
 
