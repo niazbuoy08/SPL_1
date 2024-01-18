@@ -171,7 +171,7 @@
 	"FileManager.h"
 	"SmartCDS.h"
 
-1705529632 source:c:\users\user\onedrive\desktop\spl\spl_1\smartcds\salesperson.cpp
+1705555162 source:c:\users\user\onedrive\desktop\spl\spl_1\smartcds\salesperson.cpp
 	"SalesPerson.h"
 	"SmartCDS.h"
 	<fstream>
@@ -179,12 +179,15 @@
 	<ctime>
 	<iostream>
 	"Admin.h"
+	<vector>
+	<algorithm>
 
-1705529441 c:\users\user\onedrive\desktop\spl\spl_1\smartcds\salesperson.h
+1705555162 c:\users\user\onedrive\desktop\spl\spl_1\smartcds\salesperson.h
 	<iostream>
 	<string>
 	"User.h"
 	<ctime>
+	<vector>
 
 1705527343 source:c:\users\user\onedrive\desktop\spl\spl_1\smartcds\smartcds.cpp
 	"SmartCDS.h"

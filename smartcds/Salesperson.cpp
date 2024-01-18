@@ -5,6 +5,9 @@
 #include <ctime>
 #include <iostream>
 #include"Admin.h"
+#include<vector>
+#include <algorithm>
+
 
 using namespace std;
 
@@ -91,8 +94,18 @@ void SalesPerson::PlaceOrder() {
     cout << "--------------------------------- PLACE ORDER -----------------------------\n" << endl;
     cout << "============================================================================\n" << endl;
 
-    cout << "Enter the Product Name: ";
+    initializeRegisteredCustomers();
+    cout << "Enter the Customer Name: ";
     cin.ignore();
+    getline(cin, CustomerName);
+
+    // Check if the customer is registered
+    if (!IsCustomerRegistered(CustomerName)) {
+        cout << "Error: Customer not registered. Cannot place an order.\n";
+        return;
+    }
+
+    cout << "Enter the Product Name: ";
     getline(cin, OrderedProduct);
 
     cout << "Enter the Ordered Quantity: ";
@@ -115,15 +128,53 @@ void SalesPerson::PlaceOrder() {
         system("cls");
         cout << "Confirming order...\n";
 
-
         GenerateInvoice(OrderedProduct, OrderedQuantity, OrderedPrice);
-
 
         StorePurchaseHistory(OrderedProduct, OrderedQuantity, OrderedPrice);
     } else {
         cout << "Invalid choice.\n";
     }
 }
+void SalesPerson:: initializeRegisteredCustomers() {
+        std::ifstream inputFile("customer_registration.txt");
+
+        if (!inputFile.is_open()) {
+            std::cerr << "Error opening customer_registration.txt" << std::endl;
+            return;
+        }
+
+        std::string line;
+        while (getline(inputFile, line)) {
+            std::istringstream iss(line);
+            std::string name;
+            if (iss >> name) {
+                registeredCustomers.push_back(name);
+            }
+        }
+
+        inputFile.close();
+    }
+
+
+bool SalesPerson::IsCustomerRegistered(const std::string& customerName) const {
+
+        if (registeredCustomers.empty()) {
+            std::cout << "No customers are registered. Cannot proceed with the purchase." << std::endl;
+            return false;
+        }
+
+        auto it = std::find(registeredCustomers.begin(), registeredCustomers.end(), customerName);
+
+
+        if (it != registeredCustomers.end()) {
+            std::cout << "Customer is registered. Proceeding with the purchase." << std::endl;
+            return true;
+        } else {
+            std::cout << "Customer is not registered. Cannot proceed with the purchase." << std::endl;
+            return false;
+        }
+}
+
 void SalesPerson::GenerateInvoice(const string& OrderedProduct, int OrderedQuantity, double OrderedPrice){
 
      time_t now = time(0);

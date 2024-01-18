@@ -37,3 +37,10 @@ Price per item: 100
 Total: 200
 ---------------------------------------------------------------
 
+Invoice Date: Thu Jan 18 11:30:49 2024
+Product Name: chocolate
+Quantity: 2
+Price per item: 100
+Total: 200
+---------------------------------------------------------------
+
