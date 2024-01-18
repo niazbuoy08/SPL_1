@@ -1,5 +1,5 @@
 #include "SalesPerson.h"
-#include "SmartCDS.h" // Include the main header file where 'main' and other functions are declared
+#include "SmartCDS.h"
 #include <fstream>
 #include <string>
 #include <ctime>
@@ -70,7 +70,7 @@ void SalesPerson::EditOrder() {
     cout << "--------------------------------- EDIT ORDER -----------------------------\n" << endl;
     cout << "============================================================================\n" << endl;
 
-    // Assuming you want to edit the quantity
+
     cout << "Current Ordered Quantity: " << OrderedQuantity << endl;
     cout << "Enter the new Ordered Quantity: ";
     cin >> OrderedQuantity;
@@ -110,15 +110,15 @@ void SalesPerson::PlaceOrder() {
     if (choice == 1) {
         system("cls");
         cout << "Editing order...\n";
-        PlaceOrder();  // Recursive call
+        PlaceOrder();
     } else if (choice == 2) {
         system("cls");
         cout << "Confirming order...\n";
 
-        // Call the function to generate invoice
+
         GenerateInvoice(OrderedProduct, OrderedQuantity, OrderedPrice);
 
-        // Call the function to store information in purchase history
+
         StorePurchaseHistory(OrderedProduct, OrderedQuantity, OrderedPrice);
     } else {
         cout << "Invalid choice.\n";
@@ -163,7 +163,7 @@ void SalesPerson::GenerateInvoice(const string& OrderedProduct, int OrderedQuant
 
     adminInstance.UpdateInventory(OrderedProduct, OrderedQuantity);
 
-    invoiceFile.close(); // Close the invoice file
+    invoiceFile.close();
 
     cout << "Invoice generated and saved to invoice.txt successfully!" << endl;
 
@@ -187,7 +187,6 @@ void SalesPerson::StorePurchaseHistory(const string& OrderedProduct, int Ordered
         return;
     }
 
-    purchaseHistoryFile << "----------------------------- PURCHASE HISTORY -----------------------------\n";
     purchaseHistoryFile << "Invoice Date: " << dt;
     purchaseHistoryFile << "Product Name: " << OrderedProduct << "\n";
     purchaseHistoryFile << "Quantity: " << OrderedQuantity << "\n";
@@ -196,8 +195,6 @@ void SalesPerson::StorePurchaseHistory(const string& OrderedProduct, int Ordered
     purchaseHistoryFile << "---------------------------------------------------------------\n\n";
 
     purchaseHistoryFile.close();
-
-
 }
 
 
